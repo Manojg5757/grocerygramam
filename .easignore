@@ -1,0 +1,44 @@
+# 🧪 Environment & secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.jks
+*.mobileprovision
+*.json  # includes Firebase service account keys
+*.keystore
+
+# 🧱 Expo & build artifacts
+.expo/
+.expo-shared/
+dist/
+web-build/
+build/
+output/
+*.apk
+*.aab
+*.ipa
+
+# 🧼 Logs & debug
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# ⚙️ Metro cache
+.cache/
+metro-cache/
+
+# 🛠️ iOS & Android native folders (if not using bare workflow)
+android/
+ios/
+
+# 📦 Node modules
+node_modules/
+
+# 🧩 TypeScript and temporary files
+*.tsbuildinfo
+*.tmp
+*.swp
+*.swo
