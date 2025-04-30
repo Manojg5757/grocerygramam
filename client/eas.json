@@ -11,12 +11,12 @@
         "buildType": "apk"
       },
       "env": {
-        "API_KEY": "AIzaSyDgj0kuFmTTKaWrRaH0__9FLiZcckZTKDY",
-        "APP_ID": "1:1069494901913:web:31c184d361f62807192c08",
-        "AUTH_DOMAIN": "grocerygramam-27cb1.firebaseapp.com",
-        "MESSAGING_SENDER_ID": "1069494901913",
-        "PROJECT_ID": "grocerygramam-27cb1",
-        "STORAGE_BUCKET": "grocerygramam-27cb1.appspot.com"
+        "API_KEY": "@env:API_KEY",
+        "APP_ID": "@env:APP_ID",
+        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
+        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
+        "PROJECT_ID": "@env:PROJECT_ID",
+        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
       }
     },
     "preview": {
@@ -24,12 +24,12 @@
         "distribution": "internal"
       },
       "env": {
-        "API_KEY": "AIzaSyDgj0kuFmTTKaWrRaH0__9FLiZcckZTKDY",
-        "APP_ID": "1:1069494901913:web:31c184d361f62807192c08",
-        "AUTH_DOMAIN": "grocerygramam-27cb1.firebaseapp.com",
-        "MESSAGING_SENDER_ID": "1069494901913",
-        "PROJECT_ID": "grocerygramam-27cb1",
-        "STORAGE_BUCKET": "grocerygramam-27cb1.appspot.com"
+        "API_KEY": "@env:API_KEY",
+        "APP_ID": "@env:APP_ID",
+        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
+        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
+        "PROJECT_ID": "@env:PROJECT_ID",
+        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
       }
     },
     "production": {
@@ -37,12 +37,12 @@
         "autoIncrement": true
       },
       "env": {
-        "API_KEY": "AIzaSyDgj0kuFmTTKaWrRaH0__9FLiZcckZTKDY",
-        "APP_ID": "1:1069494901913:web:31c184d361f62807192c08",
-        "AUTH_DOMAIN": "grocerygramam-27cb1.firebaseapp.com",
-        "MESSAGING_SENDER_ID": "1069494901913",
-        "PROJECT_ID": "grocerygramam-27cb1",
-        "STORAGE_BUCKET": "grocerygramam-27cb1.appspot.com"
+        "API_KEY": "@env:API_KEY",
+        "APP_ID": "@env:APP_ID",
+        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
+        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
+        "PROJECT_ID": "@env:PROJECT_ID",
+        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
       }
     }
   },
