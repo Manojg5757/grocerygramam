@@ -27,19 +27,21 @@ import DeliveryDetails from '../screens/DeliveryDetails';
 import OrderConfirmed from '../screens/OrderConfirmed';
 import PrivacyPolicy from '../screens/PrivacyPolicy';
 import TermsAndConditions from '../screens/TermsAndConditions';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // **Bottom Tabs Component (Main App)**
 const BottomTabs = () => {
+  const insets = useSafeAreaInsets();
   const cartItems = useSelector((state) => state.cart);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <Tab.Navigator
-    
       screenOptions={({ route }) => ({
-        headerShown:false,
+        headerShown: false,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === 'Home') {
@@ -55,19 +57,25 @@ const BottomTabs = () => {
         },
         tabBarActiveTintColor: myColors.primary,
         tabBarInactiveTintColor: 'gray',
-        tabBarStyle: { backgroundColor: '#fff', height: 60, paddingBottom: 10 },
+        tabBarStyle: {
+          backgroundColor: '#fff',
+          height: 60 + insets.bottom,  // adding safe area
+          paddingBottom: insets.bottom > 0 ? insets.bottom : 10,  // bottom safe area padding
+        },
       })}
     >
-      <Tab.Screen  name="Home" component={Home} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Products" component={Products} />
-      <Tab.Screen name="Cart" component={Cart}
-       options={{
-        tabBarBadge: cartCount > 0 ? cartCount : null,
-        tabBarBadgeStyle: {
-          backgroundColor: 'red',
-          color: 'white',
-        },
-      }}
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          tabBarBadge: cartCount > 0 ? cartCount : null,
+          tabBarBadgeStyle: {
+            backgroundColor: 'red',
+            color: 'white',
+          },
+        }}
       />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
