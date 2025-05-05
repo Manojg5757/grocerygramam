@@ -26,6 +26,8 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loadCartFromStorage } from "../../Redux/CartSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const nav = useNavigation();
@@ -35,7 +37,8 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [unverifiedUser, setUnverifiedUser] = useState(null);
+  const [unverifiedUser, setUnverifiedUser] = useState(null)
+  const dispatch = useDispatch()
 
   const { email, password } = userCredential;
   const auth = getAuth();
@@ -88,6 +91,7 @@ const Login = () => {
         JSON.stringify({ uid: user.uid, email: user.email })
       );
       Alert.alert("Success", "Login Successful!");
+      dispatch(loadCartFromStorage())
       nav.replace("Main");
     } catch (error) {
       let errorMessage = "Login failed. Please try again.";
@@ -237,11 +241,11 @@ const Login = () => {
                     marginTop: 20,
                     padding: 12,
                     borderRadius: 10,
-                    backgroundColor: "#ffaaaa",
+                    backgroundColor: "#328E6E",
                     alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: "#600000", fontSize: 16, fontWeight: "bold" }}>
+                  <Text style={{ color: "white" , fontSize: 16, fontWeight: "bold" }}>
                     Resend Verification Email
                   </Text>
                 </TouchableOpacity>

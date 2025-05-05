@@ -1,3 +1,5 @@
+// Products.js
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,23 +11,26 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform
+  Platform,
+  Dimensions,
 } from "react-native";
-import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { checkAndFetchProducts } from "../../Redux/ProductSlice"; // ✅ updated import
+import { checkAndFetchProducts } from "../../Redux/ProductSlice";
 import { addToCart } from "../../Redux/CartSlice";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { myColors } from "../Utils/MyColors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import FastImage from "react-native-fast-image";
 
-const Products = () => {
-  const { t,i18n } = useTranslation();
+const { width: screenWidth } = Dimensions.get("window");
+
+export default function Products() {
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
-  console.log("lang",lang)
+
   const route = useRoute();
   const nav = useNavigation();
   const dispatch = useDispatch();
@@ -36,14 +41,16 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCategoryName, setSelectedCategoryName] = useState(null);
 
-  const key = `name_${lang}`;
+  // calculate tile width for 2‑column grid
+  const H_PAD = 10 * 2;
+  const MARGIN_H = 10;
+  const NUM_COL = 2;
+  const tileWidth = (screenWidth - H_PAD - MARGIN_H * NUM_COL) / NUM_COL;
 
-  // ✅ Use the new checkAndFetchProducts thunk on mount
   useEffect(() => {
     dispatch(checkAndFetchProducts());
   }, [dispatch]);
 
-  // ✅ Set category if passed via route
   useEffect(() => {
     if (route.params?.categoryId) {
       setSelectedCategory(route.params.categoryId);
@@ -54,28 +61,26 @@ const Products = () => {
     }
   }, [route.params]);
 
-  // ✅ Filter products by category
-  let filteredProducts = selectedCategory
-    ? products.filter((item) => item.categoryId === selectedCategory)
+  let filtered = selectedCategory
+    ? products.filter((p) => p.categoryId === selectedCategory)
     : products;
 
-  // ✅ Apply search filter
   if (searchTerm.trim() !== "") {
-    filteredProducts = filteredProducts.filter((item) =>
-      item.name_en.toLowerCase().includes(searchTerm.toLowerCase())
+    filtered = filtered.filter((p) =>
+      p.name_en.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 
-  const handleAddToCart = (product) => {
+  function handleAddToCart(product) {
     if (!cartItems.some((item) => item.id === product.id)) {
       dispatch(addToCart(product));
     }
-  };
+  }
 
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color={myColors.primary} />
       </View>
     );
   }
@@ -92,101 +97,117 @@ const Products = () => {
               marginTop: 20,
               fontSize: 20,
               fontWeight: "bold",
-              marginVertical: 20,
+              marginBottom: 20,
               color: myColors.primary,
             }}
           >
             {t("All Products")}
           </Text>
 
-          {/* 🔍 Search Bar */}
+          {/* Search Bar */}
           <View
             style={{
-              backgroundColor: "white",
+              backgroundColor: "#fff",
               borderRadius: 10,
               flexDirection: "row",
               alignItems: "center",
               paddingHorizontal: 10,
               paddingVertical: 8,
-              width: "100%",
-              justifyContent: "space-between",
+              marginBottom: 10,
             }}
           >
             <FontAwesome name="search" size={20} color="black" />
             <TextInput
               placeholder={t("Search products...")}
               value={searchTerm}
-              onChangeText={(text) => setSearchTerm(text)}
-              style={{
-                flex: 1,
-                marginHorizontal: 10,
-                fontSize: 16,
-              }}
+              onChangeText={setSearchTerm}
+              style={{ flex: 1, marginHorizontal: 10, fontSize: 16 }}
             />
             {searchTerm.length > 0 && (
               <TouchableOpacity onPress={() => setSearchTerm("")}>
-                <MaterialIcons name="highlight-remove" size={24} color="black" />
+                <MaterialIcons
+                  name="highlight-remove"
+                  size={24}
+                  color="black"
+                />
               </TouchableOpacity>
             )}
           </View>
 
-          {/* ✅ Selected category info */}
+          {/* Selected Category */}
           {selectedCategory && (
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                gap: 10,
-                marginTop: 10,
+                marginBottom: 10,
               }}
             >
               <Text style={{ fontSize: 15, fontWeight: "bold" }}>
                 {selectedCategoryName}
               </Text>
               <TouchableOpacity onPress={() => setSelectedCategory(null)}>
-                <MaterialIcons name="highlight-remove" size={24} color="black" />
+                <MaterialIcons
+                  name="highlight-remove"
+                  size={24}
+                  color="black"
+                />
               </TouchableOpacity>
             </View>
           )}
 
-          {/* ✅ Product list */}
-          {filteredProducts.length > 0 ? (
+          {/* Product Grid */}
+          {filtered.length > 0 ? (
             <FlatList
-              data={filteredProducts}
-              keyExtractor={(item) => item.id}
-              numColumns={2}
+              data={filtered}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={NUM_COL}
               keyboardShouldPersistTaps="handled"
               columnWrapperStyle={{ justifyContent: "space-between" }}
               renderItem={({ item }) => {
-                const isInCart = cartItems.some(
-                  (cartItem) => cartItem.id === item.id
-                );
+                const isInCart = cartItems.some((ci) => ci.id === item.id);
                 return (
                   <TouchableOpacity
                     onPress={() =>
                       nav.navigate("ProductDetails", { productId: item.id })
                     }
                     style={{
-                      width: "48%",
+                      width: tileWidth,
                       backgroundColor: "#fff",
-                      borderRadius: 10,
-                      padding: 10,
-                      marginVertical: 10,
-                      elevation: 2,
+                      borderRadius: 12,
+                      padding: 12,
+                      marginBottom: 10,
+                      ...(Platform.OS === "ios"
+                        ? {
+                            shadowColor: "#000",
+                            shadowOpacity: 0.1,
+                            shadowRadius: 6,
+                            shadowOffset: { width: 0, height: 2 },
+                          }
+                        : { elevation: 3 }),
                     }}
                   >
-                    <Image
-                      source={{ uri: item.icon }}
+                    <FastImage
+                      source={{
+                        uri: item.icon,
+                        priority: FastImage.priority.normal,
+                        cache: FastImage.cacheControl.immutable, // or 'web' if you're handling cache headers from Firebase
+                      }}
                       style={{
                         width: "100%",
-                        height: 150,
-                        borderRadius: 10,
-                        alignSelf: "center",
+                        aspectRatio: 1,
+                        borderRadius: 8,
                       }}
+                      resizeMode={FastImage.resizeMode.cover}
                     />
+
                     <View style={{ height: 50 }}>
                       <Text
-                        style={{ fontSize: 16, fontWeight: "bold", marginTop: 5 }}
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          marginTop: 5,
+                        }}
                         numberOfLines={2}
                         ellipsizeMode="tail"
                       >
@@ -201,7 +222,7 @@ const Products = () => {
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        gap: 10,
+                        marginTop: 4,
                       }}
                     >
                       <Text style={{ fontWeight: "bold", fontSize: 20 }}>
@@ -211,6 +232,7 @@ const Products = () => {
                         style={{
                           textDecorationLine: "line-through",
                           color: "gray",
+                          marginLeft: 8,
                         }}
                       >
                         ₹{item.mrp}
@@ -219,12 +241,9 @@ const Products = () => {
                     <TouchableOpacity
                       style={{
                         marginTop: 8,
-                        backgroundColor: isInCart ? "#ccc" : "#28a745",
-                        paddingVertical: 6,
-                        paddingHorizontal: 15,
+                        backgroundColor: isInCart ? "#ccc" : myColors.primary,
+                        paddingVertical: 8,
                         borderRadius: 5,
-                        width: "100%",
-                        alignSelf: "center",
                       }}
                       onPress={() => handleAddToCart(item)}
                       disabled={isInCart}
@@ -245,13 +264,11 @@ const Products = () => {
             />
           ) : (
             <Text style={{ textAlign: "center", marginTop: 20, fontSize: 16 }}>
-              No products found.
+              {t("No products found.")}
             </Text>
           )}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
-};
-
-export default Products;
+}

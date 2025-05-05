@@ -6,6 +6,7 @@ import { notificationListener } from "./src/firebasepush/FirebasePush";
 import * as Notifications from 'expo-notifications';
 import './src/i18n/index.js';
 import i18n from "./src/i18n/index.js";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 // 👇 Configure how notifications behave
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -27,9 +28,11 @@ const App = () => {
   }, []);
 
   return (
+    <SafeAreaProvider>
     <Provider store={store}>
       <AppNavigator />
     </Provider>
+    </SafeAreaProvider>
   );
 };
 

@@ -1,4 +1,11 @@
-import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableOpacity,
+  Alert,
+  TextInput,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,13 +16,26 @@ import {
 import { myColors } from "../Utils/MyColors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { getAuth, signOut } from "firebase/auth";
+import {
+  EmailAuthProvider,
+  getAuth,
+  signOut,
+  reauthenticateWithCredential,
+} from "firebase/auth";
 import Feather from "@expo/vector-icons/Feather";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
   const { t, i18n } = useTranslation();
@@ -25,6 +45,10 @@ const Profile = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+  const [isAccountDelete, setIsAccountDelete] = useState(false);
+  const [password, setPassword] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  console.log(password);
 
   useEffect(() => {
     const checkAdminRole = async () => {
@@ -77,6 +101,56 @@ const Profile = () => {
     }
   };
 
+  const getPassword = async () => {
+    Alert.alert(
+      "Delete Account",
+      "Are you sure you want to delet your account? This action can't be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            setIsAccountDelete(!isAccountDelete);
+          },
+        },
+      ]
+    );
+  };
+
+  const handleAccountDelete = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(user.email, password);
+
+      await reauthenticateWithCredential(user, credential);
+
+      const db = getFirestore();
+
+      await deleteDoc(doc(db, "users", user.uid));
+      const usernameDocRef = doc(db, "usernames", userData.username);
+      await deleteDoc(usernameDocRef);
+
+      await user.delete();
+      await AsyncStorage.removeItem("userToken");
+      dispatch(logoutAndClearUserData());
+      nav.replace("Login");
+    } catch (error) {
+      // console.error("Error during account deletion:", error);
+      if (error.code === "auth/invalid-credential") {
+        Alert.alert(
+          "Incorrect Password",
+          "The password you entered is incorrect."
+        );
+      } else {
+        Alert.alert("Error", error.message);
+      }
+    }
+  };
+
   const handleLanguageChange = async (lang) => {
     try {
       i18n.changeLanguage(lang);
@@ -102,7 +176,7 @@ const Profile = () => {
   }
 
   return (
-    <View style={{ flex: 1, padding: 20, backgroundColor: "#f8f8f8" }}>
+    <SafeAreaView style={{ flex: 1, padding: 20, backgroundColor: "#f8f8f8" }}>
       <Text
         style={{
           fontSize: 24,
@@ -312,6 +386,83 @@ const Profile = () => {
                 color={myColors.primary}
               />
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={getPassword}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingVertical: 12,
+                borderBottomWidth: 1,
+                borderColor: "lightgrey",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <AntDesign
+                  name="deleteuser"
+                  size={20}
+                  color={myColors.primary}
+                />
+                <Text style={{ fontSize: 14 }}>{t("Delete Account")}</Text>
+              </View>
+              <Entypo
+                name="chevron-thin-right"
+                size={20}
+                color={myColors.primary}
+              />
+            </TouchableOpacity>
+            {isAccountDelete && (
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <TextInput
+                    ty
+                    style={{
+                      borderColor: "#E3E3E3",
+                      borderBottomWidth: 2,
+                      fontSize: 16,
+                      marginTop: 15,
+                      flex: 0.9,
+                    }}
+                    value={password}
+                    onChangeText={setPassword}
+                    maxLength={12}
+                    keyboardType="ascii-capable"
+                    secureTextEntry={isVisible}
+                  />
+                  <Ionicons
+                    name={isVisible ? "eye-off-outline" : "eye-outline"}
+                    onPress={() => setIsVisible(!isVisible)}
+                    size={24}
+                    color="black"
+                  />
+                  <Text></Text>
+                </View>
+                <TouchableOpacity
+                  onPress={handleAccountDelete}
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    marginTop: 15,
+                    justifyContent: "center",
+                    backgroundColor: "red",
+
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                    borderRadius: 20,
+                  }}
+                >
+                  <Text style={{ color: "white" }}>Delete Account</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
 
           <TouchableOpacity
@@ -364,7 +515,7 @@ const Profile = () => {
       >
         An L34 project.
       </Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

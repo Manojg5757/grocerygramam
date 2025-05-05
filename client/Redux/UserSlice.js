@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { auth, db } from "../firebase";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setCart } from "./CartSlice";
+import { clearCart, setCart } from "./CartSlice";
 
 // ✅ Fetch user data from Firestore and store in AsyncStorage
 export const fetchUserData = createAsyncThunk(
@@ -24,7 +24,7 @@ export const fetchUserData = createAsyncThunk(
         }
 
         // Set cart state in Redux
-        dispatch(setCart(userData.cart || []));
+        // dispatch(setCart(userData.cart || []));
 
         // Save user data to AsyncStorage
         await AsyncStorage.setItem('userData', JSON.stringify(userData));
@@ -108,6 +108,7 @@ export const { logoutUser } = UserSlice.actions;
 export const logoutAndClearUserData = () => async (dispatch) => {
   await AsyncStorage.removeItem('userData');
   dispatch(logoutUser());
+  dispatch(clearCart())
 };
 
 export default UserSlice.reducer;

@@ -10,40 +10,20 @@
         "distribution": "internal",
         "buildType": "apk"
       },
-      "env": {
-        "API_KEY": "@env:API_KEY",
-        "APP_ID": "@env:APP_ID",
-        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
-        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
-        "PROJECT_ID": "@env:PROJECT_ID",
-        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
-      }
+      "channel": "development"
     },
     "preview": {
       "android": {
         "distribution": "internal"
       },
-      "env": {
-        "API_KEY": "@env:API_KEY",
-        "APP_ID": "@env:APP_ID",
-        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
-        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
-        "PROJECT_ID": "@env:PROJECT_ID",
-        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
-      }
+      "channel": "preview"
     },
     "production": {
       "android": {
-        "autoIncrement": true
+        "autoIncrement": true,
+        "releaseChannel": "production"
       },
-      "env": {
-        "API_KEY": "@env:API_KEY",
-        "APP_ID": "@env:APP_ID",
-        "AUTH_DOMAIN": "@env:AUTH_DOMAIN",
-        "MESSAGING_SENDER_ID": "@env:MESSAGING_SENDER_ID",
-        "PROJECT_ID": "@env:PROJECT_ID",
-        "STORAGE_BUCKET": "@env:STORAGE_BUCKET"
-      }
+      "channel": "production"
     }
   },
   "submit": {

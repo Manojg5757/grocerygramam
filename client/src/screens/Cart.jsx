@@ -19,12 +19,16 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const Cart = () => {
   const nav = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart || []);
+  const user = useSelector(state => state.user.userData)
+
 
   // Load cart from AsyncStorage when component mounts
   useEffect(() => {
@@ -34,6 +38,19 @@ const Cart = () => {
   const handleIncrease = (item) => dispatch(increaseQuantity(item));
   const handleDecrease = (item) => dispatch(decreaseQuantity(item));
   const handleRemove = (item) => dispatch(removeFromCart(item));
+
+  const handleProceed = async()=>{
+    try {
+      if(!user){
+        nav.navigate('Login')
+        return
+      }
+      nav.navigate("DeliveryDetails", {
+        grandTotal: grandTotal,
+        pickup: isEligibileForDelivery ? "Home Delivery" : "Self Pickup",})
+    } catch (error) {
+      console.log(error)
+    }}
 
   const grandTotal = cartItems.reduce(
     (total, item) => total + item.quantity * item.offer_price,
@@ -201,12 +218,7 @@ const Cart = () => {
         <Button
           title={t("Proceed to Checkout")}
           disabled={cartItems.length === 0}
-          onPress={() =>
-            nav.navigate("DeliveryDetails", {
-              grandTotal: grandTotal,
-              pickup: isEligibileForDelivery ? "Home Delivery" : "Self Pickup",
-            })
-          }
+          onPress={handleProceed}
           color={myColors.primary}
           style={{
             marginTop: 20,

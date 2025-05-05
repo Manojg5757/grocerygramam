@@ -104,7 +104,7 @@ const AdminDashboard = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>All Orders</Text>
+        <Text style={styles.headerText}>📦 All Orders</Text>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
@@ -114,17 +114,24 @@ const AdminDashboard = () => {
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id}
-        showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 30 }}
         renderItem={({ item }) => (
           <View key={item.id} style={styles.orderCard}>
-            <Text style={styles.orderTitle}>Customer Details:</Text>
+            {/* Customer Info */}
+            <Text style={styles.orderTitle}>👤 Customer Details</Text>
             <Text style={styles.orderText}>Username: {item.userDetails.username || "N/A"}</Text>
             <Text style={styles.orderText}>Phone: {item.userDetails.phone || "N/A"}</Text>
             <Text style={styles.orderText}>Address: {item.userDetails.address || "N/A"}</Text>
             <Text style={styles.orderText}>Landmark: {item.userDetails.landmark || "N/A"}</Text>
 
-            <Text style={[styles.orderTitle, { marginTop: 10 }]}>Order Details:</Text>
+            {/* Pickup Badge */}
+            <View style={styles.pickupBadge}>
+              <Text style={styles.pickupText}>Pickup: {item.pickup || "N/A"}</Text>
+            </View>
+
+            {/* Order Info */}
+            <Text style={[styles.orderTitle, { marginTop: 12 }]}>📝 Order Details</Text>
             <Text style={styles.orderText}>Total Amount: ₹{item.totalAmount}</Text>
             <Text style={styles.orderText}>Ordered Items:</Text>
             {item.orderedItems?.map((orderItem, index) => (
@@ -133,11 +140,12 @@ const AdminDashboard = () => {
               </Text>
             ))}
 
+            {/* Delete Button */}
             <TouchableOpacity
               onPress={() => handleDelete(item.id)}
               style={styles.deleteButton}
             >
-              <Text style={styles.deleteText}>Delete Order</Text>
+              <Text style={styles.deleteText}>🗑️ Delete Order</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -150,7 +158,7 @@ const styles = {
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#f0f4f8",
   },
   center: {
     flex: 1,
@@ -165,7 +173,7 @@ const styles = {
     marginBottom: 20,
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     color: myColors.primary,
   },
@@ -182,43 +190,57 @@ const styles = {
   },
   orderCard: {
     backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 15,
+    borderRadius: 10,
+    padding: 18,
+    marginBottom: 18,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 4,
     elevation: 3,
   },
   orderTitle: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "700",
     color: myColors.primary,
-    marginBottom: 5,
+    marginBottom: 6,
   },
   orderText: {
     fontSize: 14,
-    color: "#555",
+    color: "#444",
     marginBottom: 4,
   },
   itemText: {
     fontSize: 14,
     color: "#555",
-    marginLeft: 10,
+    marginLeft: 12,
+    marginBottom: 3,
   },
   deleteButton: {
     backgroundColor: "#d9534f",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 6,
-    marginTop: 15,
+    marginTop: 16,
     alignSelf: "flex-start",
   },
   deleteText: {
     color: "#fff",
     fontSize: 14,
     fontWeight: "bold",
+  },
+  pickupBadge: {
+    backgroundColor: "#ffeb3b",
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    alignSelf: "flex-start",
+    marginTop: 10,
+  },
+  pickupText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "#333",
   },
 };
 

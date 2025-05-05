@@ -1,8 +1,12 @@
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import React from 'react';
+import FastImage from 'react-native-fast-image';
 import { myColors } from '../Utils/MyColors';
 import { catering } from '../../data';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+const { width } = Dimensions.get('window');
+const cardWidth = (width - 45) / 2; // 15 padding + 15 padding + 15 spacing between = 45
 
 const Catering = () => {
   const renderHeader = () => (
@@ -18,17 +22,18 @@ const Catering = () => {
       >
         Sri Sakthi Catering
       </Text>
-      <Image
+      <FastImage
         source={{
           uri: 'https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fcateringbannertwo.png?alt=media&token=8dcac0d6-3edb-435d-811d-0a30fc45ebfa',
+          priority: FastImage.priority.high,
         }}
         style={{
-          height: 220,
           width: '100%',
+          height: width * 0.55,
           borderRadius: 20,
-          resizeMode: 'cover',
           marginBottom: 20,
         }}
+        resizeMode={FastImage.resizeMode.cover}
       />
     </View>
   );
@@ -57,19 +62,18 @@ const Catering = () => {
               shadowRadius: 5,
               elevation: 5,
               overflow: 'hidden',
-              width: '48%', // Adjust width for two columns
-              marginBottom: 20,
+              width: cardWidth,
             }}
           >
-            <Image
+            <FastImage
+              source={{ uri: item.icon, priority: FastImage.priority.normal }}
               style={{
-                height: 150,
                 width: '100%',
+                height: cardWidth * 0.75,
                 borderTopLeftRadius: 15,
                 borderTopRightRadius: 15,
-                resizeMode: 'cover',
               }}
-              source={{ uri: item.icon }}
+              resizeMode={FastImage.resizeMode.cover}
             />
             <View style={{ padding: 10 }}>
               <Text
