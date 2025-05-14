@@ -85,7 +85,7 @@ const Login = () => {
         await auth.signOut();
         return;
       }
-
+      
       await AsyncStorage.setItem(
         "userToken",
         JSON.stringify({ uid: user.uid, email: user.email })

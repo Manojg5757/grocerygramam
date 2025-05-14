@@ -10,7 +10,7 @@ export const fetchUserData = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const user = auth.currentUser;
-      console.log(user);
+      console.log("userslice",user);
       if (!user) throw new Error("User not logged in");
 
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -79,6 +79,7 @@ const UserSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
+        console.log("userslice:",action.payload)
         state.loading = false;
         state.userData = action.payload;
       })

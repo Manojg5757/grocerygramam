@@ -26,6 +26,7 @@ const DeliveryDetails = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const data = await AsyncStorage.getItem("userData");
+      console.log("deliverydetails:",data)
       if (data) {
         setStoredUserData(JSON.parse(data)); // Assuming the data is stored as a JSON string
       }
@@ -37,6 +38,7 @@ const DeliveryDetails = () => {
   const handleConfirmOrder = async () => {
     if (!storedUserData) {
       nav.navigate("UserName");
+      return
     }
     try {
       const orderData = {
@@ -50,7 +52,7 @@ const DeliveryDetails = () => {
           0
         ),
         pickup: pickup,
-        orderDate: new Date().toISOString(),
+        orderDate: new Date().toISOString(),   
       };
 
       // Dispatch action to add the order to Firestore
@@ -78,7 +80,7 @@ const DeliveryDetails = () => {
       {storedUserData ? (
         <>
           <ScrollView
-            contentContainerStyle={{ padding: 20, paddingBottom: 120 }}
+            contentContainerStyle={{ padding: 20, paddingBottom: 160 }}
             showsVerticalScrollIndicator={false}
           >
             <View

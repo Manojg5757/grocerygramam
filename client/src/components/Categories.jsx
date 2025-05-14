@@ -1,7 +1,7 @@
 import { View, Text, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
 import React from 'react';
 import { category } from '../../data.js';
-import { useNavigation } from '@react-navigation/native';
+import {  useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -10,6 +10,10 @@ const Categories = () => {
   const nav = useNavigation();
   const { i18n } = useTranslation();
   const lang = i18n.language;
+
+
+
+ 
 
   // total horizontal padding around list
   const HORIZONTAL_PADDING = 10 * 2;   
@@ -26,6 +30,7 @@ const Categories = () => {
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <FlatList
+      
         data={category}
         keyExtractor={(item) => item.categoryId.toString()}
         numColumns={NUM_COLUMNS}

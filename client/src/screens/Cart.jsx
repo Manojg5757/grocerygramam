@@ -28,6 +28,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart || []);
   const user = useSelector(state => state.user.userData)
+  console.log("cart",user)
 
 
   // Load cart from AsyncStorage when component mounts

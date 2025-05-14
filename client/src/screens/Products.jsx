@@ -1,5 +1,5 @@
 // Products.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   Platform,
   Dimensions,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAndFetchProducts } from "../../Redux/ProductSlice";
 import { addToCart } from "../../Redux/CartSlice";
@@ -40,12 +40,21 @@ export default function Products() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCategoryName, setSelectedCategoryName] = useState(null);
+  const flatListRef = useRef()
 
   // calculate tile width for 2‑column grid
   const H_PAD = 10 * 2;
   const MARGIN_H = 10;
   const NUM_COL = 2;
   const tileWidth = (screenWidth - H_PAD - MARGIN_H * NUM_COL) / NUM_COL;
+
+  useFocusEffect(
+    useCallback(()=>{
+      if(flatListRef.current){
+        flatListRef.current.scrollToOffset({offset:0,animated:false})
+      }
+    },[])
+  )
 
   useEffect(() => {
     dispatch(checkAndFetchProducts());
@@ -159,8 +168,11 @@ export default function Products() {
           {/* Product Grid */}
           {filtered.length > 0 ? (
             <FlatList
+            ref={flatListRef}
               data={filtered}
               keyExtractor={(item) => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
               numColumns={NUM_COL}
               keyboardShouldPersistTaps="handled"
               columnWrapperStyle={{ justifyContent: "space-between" }}

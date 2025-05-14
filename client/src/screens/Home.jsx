@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StatusBar, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeIcon from "../components/HomeIcon";
 import HomeBanner from "../components/HomeBanner";
 import Categories from "../components/Categories";
+import { getPermissionAndSaveToken } from "../firebasepush/FirebasePermission";
+import { fetchUserData, loadUserDataFromStorage } from "../../Redux/UserSlice";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   // Combine the static components (banner, icon, etc.) into the ListHeaderComponent
+  const dispatch = useDispatch()
   const renderHeader = () => (
     <View>
       <HomeIcon />
       <HomeBanner />
     </View>
   );
+
+  useEffect(()=>{
+    getPermissionAndSaveToken()
+     dispatch(loadUserDataFromStorage()).then(() => {
+      dispatch(fetchUserData());
+    });
+  },[])
 
   return (
     <SafeAreaView

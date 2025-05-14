@@ -32,7 +32,7 @@ const HomeBannerSlider = () => {
     {
       id: "2",
       uri:
-        "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2FhomebannerTamil.png?alt=media&token=52cebd0e-6f6c-4d9e-95f8-41cce4f85b7d",
+        "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fslide.png?alt=media&token=26387e52-b4d4-4b4a-afaa-fc0aa31533fa",
       screen: "Catering",
     },
   ];
@@ -78,17 +78,19 @@ const HomeBannerSlider = () => {
       {loadingIds.includes(item.id) && (
         <ActivityIndicator style={styles.loader} size="large" color="#999" />
       )}
-      <FastImage
-        style={styles.image}
-        source={{
-          uri: item.uri,
-          priority: FastImage.priority.high,
-          cache: FastImage.cacheControl.immutable,
-        }}
-        resizeMode={FastImage.resizeMode.cover}
-        onLoadStart={() => handleLoadStart(item.id)}
-        onLoadEnd={() => handleLoadEnd(item.id)}
-      />
+      <View style={styles.imageWrapper}>
+    <FastImage
+      style={styles.image}
+      source={{
+        uri: item.uri,
+        priority: FastImage.priority.high,
+        cache: FastImage.cacheControl.web,
+      }}
+      resizeMode={FastImage.resizeMode.cover}
+      onLoadStart={() => handleLoadStart(item.id)}
+      onLoadEnd={() => handleLoadEnd(item.id)}
+    />
+  </View>
     </TouchableOpacity>
   );
 
@@ -134,10 +136,11 @@ const HomeBannerSlider = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position:'relative',
     borderRadius: 12,
     overflow: "hidden",
     height: bannerHeight,
-    backgroundColor: "#fff",
+    backgroundColor: "red",
   },
   bannerWrapper: {
     width: screenWidth,
@@ -147,7 +150,9 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: bannerHeight,
+  height: bannerHeight,
+  borderTopLeftRadius: 12,
+  borderTopRightRadius: 12,
   },
   loader: {
     position: "absolute",
@@ -158,20 +163,23 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   pagination: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 8,
+  position: 'absolute',
+  bottom: 10, // or 0 if you want it flush at the bottom
+  left: 0,
+  right: 0,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#ccc",
+    backgroundColor: "black",
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: "#333",
+    backgroundColor: "white",
     width: 10,
     height: 10,
     borderRadius: 5,

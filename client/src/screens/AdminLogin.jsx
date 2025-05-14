@@ -8,12 +8,16 @@ import {
   ActivityIndicator,
   Image,
 } from "react-native";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import messaging from "@react-native-firebase/messaging";
-import { getApp } from "firebase/app";
 import { myColors } from "../Utils/MyColors"; // Custom colors if you have
 import logo from "../../assets/logo.png"; // Replace with your logo path
 
@@ -50,7 +54,11 @@ const AdminLogin = () => {
 
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       const adminDoc = await getDoc(doc(db, "admin", user.uid));
 
@@ -63,11 +71,23 @@ const AdminLogin = () => {
 
         if (enabled) {
           // ✅ Get FCM Token
-          const token = await messaging().getToken();
-          console.log("✅ FCM Token fetched:", token);
+          const currentToken = await messaging().getToken();
+          const savedToken = await AsyncStorage.getItem("fcmtoken");
+          console.log("✅ FCM Token fetched:", currentToken);
+          if (currentToken !== savedToken) {
+            await setDoc(
+              doc(db, "admin", user.uid),
+              { fcmToken: currentToken },
+              { merge: true }
+            );
+            await AsyncStorage.setItem("fcmtoken", currentToken);
+            console.log("FCM token updated")
+          }else{
+            console.log("Fcm token unchanged")
+          }
 
           // 🔥 Save token to Firestore under admin document
-          await setDoc(doc(db, "admin", user.uid), { fcmToken: token }, { merge: true });
+
           console.log("✅ FCM Token saved to Firestore");
         } else {
           console.warn("🚫 Notification permission not granted");
@@ -87,16 +107,34 @@ const AdminLogin = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20, backgroundColor: "#F4F7FC" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: 20,
+        backgroundColor: "#F4F7FC",
+      }}
+    >
       <View style={{ alignItems: "center", marginBottom: 40 }}>
         <Image
           source={logo} // Add your logo here if any
           style={{ width: 120, height: 120, marginBottom: 20 }}
         />
-        <Text style={{ fontSize: 28, fontWeight: "bold", color: myColors.primary }}>Admin Login</Text>
+        <Text
+          style={{ fontSize: 28, fontWeight: "bold", color: myColors.primary }}
+        >
+          Admin Login
+        </Text>
       </View>
 
-      <View style={{ backgroundColor: "white", borderRadius: 10, padding: 30, elevation: 5 }}>
+      <View
+        style={{
+          backgroundColor: "white",
+          borderRadius: 10,
+          padding: 30,
+          elevation: 5,
+        }}
+      >
         <TextInput
           placeholder="Email"
           value={email}
@@ -125,7 +163,7 @@ const AdminLogin = () => {
             color: "#333",
           }}
         />
-        
+
         <TouchableOpacity
           onPress={handleLogin}
           style={{
@@ -138,7 +176,9 @@ const AdminLogin = () => {
           {loading ? (
             <ActivityIndicator color="white" />
           ) : (
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>Login</Text>
+            <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
+              Login
+            </Text>
           )}
         </TouchableOpacity>
       </View>

@@ -9,8 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchUserData,
-  loadUserDataFromStorage,
   logoutAndClearUserData,
 } from "../../Redux/UserSlice";
 import { myColors } from "../Utils/MyColors";
@@ -82,9 +80,7 @@ const Profile = () => {
       }
     };
 
-    dispatch(loadUserDataFromStorage()).then(() => {
-      dispatch(fetchUserData());
-    });
+   
 
     checkAdminRole();
   }, [dispatch]);
@@ -188,7 +184,6 @@ const Profile = () => {
       >
         {t("Profile")}
       </Text>
-
       {userData ? (
         <>
           <View style={{ marginTop: 20 }}>
