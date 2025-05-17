@@ -76,7 +76,7 @@ export default function Products() {
 
   if (searchTerm.trim() !== "") {
     filtered = filtered.filter((p) =>
-      p.name_en.toLowerCase().includes(searchTerm.toLowerCase())
+    p[`name_${lang}`].toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
 

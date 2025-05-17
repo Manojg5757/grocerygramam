@@ -72,7 +72,7 @@ const AdminLogin = () => {
         if (enabled) {
           // ✅ Get FCM Token
           const currentToken = await messaging().getToken();
-          const savedToken = await AsyncStorage.getItem("fcmtoken");
+          const savedToken = await AsyncStorage.getItem("fcmToken");
           console.log("✅ FCM Token fetched:", currentToken);
           if (currentToken !== savedToken) {
             await setDoc(
@@ -80,7 +80,7 @@ const AdminLogin = () => {
               { fcmToken: currentToken },
               { merge: true }
             );
-            await AsyncStorage.setItem("fcmtoken", currentToken);
+            await AsyncStorage.setItem("fcmToken", currentToken);
             console.log("FCM token updated")
           }else{
             console.log("Fcm token unchanged")

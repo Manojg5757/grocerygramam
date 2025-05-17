@@ -4,7 +4,7 @@ export default () => ({
   expo: {
     name: "myproject",
     slug: "myproject",
-    version: "1.8.0",
+    version: "1.9.0",
     runtimeVersion: { policy: "appVersion" },
     orientation: "portrait",
     icon: "./assets/logo.png",

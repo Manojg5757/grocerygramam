@@ -205,7 +205,8 @@ const Profile = () => {
               <Text style={{ fontWeight: "bold" }}>{userData.email}</Text>
             </Text>
             <Text style={{ fontSize: 14, marginVertical: 5 }}>
-              {userData.address}
+              {t("Address")}:{" "}
+              <Text style={{ fontWeight: "bold" }}>{userData.address}</Text>
             </Text>
           </View>
 

@@ -65,7 +65,7 @@ const HomeBannerSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       scrollToNext();
-    }, 3000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [currentIndex]); // depends on currentIndex to always move to next
 

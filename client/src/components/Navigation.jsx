@@ -28,6 +28,7 @@ import OrderConfirmed from '../screens/OrderConfirmed';
 import PrivacyPolicy from '../screens/PrivacyPolicy';
 import TermsAndConditions from '../screens/TermsAndConditions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import StockClearance from '../screens/StockClearnce';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,6 +107,7 @@ const AppNavigator = () => {
         <Stack.Screen name='OrderConfirmed' component={OrderConfirmed} />
         <Stack.Screen name='PrivacyPolicy' component={PrivacyPolicy} />
         <Stack.Screen name='TermsAndConditions' component={TermsAndConditions} />
+        <Stack.Screen name='StockClearance' component={StockClearance} />
         
         {/* Additional Screens (Not in Bottom Tabs) */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
