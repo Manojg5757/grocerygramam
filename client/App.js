@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
 import AppNavigator from "./src/components/Navigation";
+import ErrorBoundary from "./src/components/ErrorBoundary";
 import { notificationListener } from "./src/firebasepush/FirebasePush";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
@@ -65,11 +66,13 @@ const App = () => {
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <AppNavigator />
-      </Provider>
-    </SafeAreaProvider>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <AppNavigator />
+        </Provider>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 };
 

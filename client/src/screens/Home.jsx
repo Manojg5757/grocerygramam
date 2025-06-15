@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { StatusBar, FlatList, View, BackHandler, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeIcon from "../components/HomeIcon";
@@ -21,7 +21,7 @@ const Home = () => {
   );
 
 
-  useFocusEffect(
+  useEffect(
     useCallback(() => {
       getPermissionAndSaveToken();
       dispatch(loadUserDataFromStorage()).then(() => {
