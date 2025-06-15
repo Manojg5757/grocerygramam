@@ -251,7 +251,7 @@ const Signup = () => {
                     }}
                     style={{ padding: 12 }}
                   >
-                    <Text style={{ fontSize: 16 }}>{g}</Text>
+                    <Text style={{ fontSize: 16,color:'black' }}>{g}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -285,7 +285,7 @@ const Signup = () => {
                     }}
                     style={{ padding: 12 }}
                   >
-                    <Text style={{ fontSize: 16 }}>{lang}</Text>
+                    <Text style={{ fontSize: 16,color:'black' }}>{lang}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -344,7 +344,7 @@ const Signup = () => {
           </TouchableOpacity>
 
           <View style={styles.loginContainer}>
-            <Text style={{ fontSize: 16 }}>Already have an account?</Text>
+            <Text style={{ fontSize: 16,color:'black' }}>Already have an account?</Text>
             <TouchableOpacity onPress={() => nav.navigate("Login")}>
               <Text
                 style={{
@@ -374,6 +374,7 @@ const styles = {
     borderColor: "#E3E3E3",
     borderBottomWidth: 2,
     fontSize: 16,
+    color:'black',
     marginTop: 15,
   },
   terms: {

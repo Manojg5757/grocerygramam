@@ -69,6 +69,7 @@ const Categories = () => {
                   textAlign: 'center',
                   marginTop: 5,
                   fontWeight: 'bold',
+                  color:'black'
                 }}
                 numberOfLines={1}
               >

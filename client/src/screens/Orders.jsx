@@ -5,6 +5,15 @@ import { fetchOrdersFromFirestore } from "../../Redux/OrderSlice";
 import { myColors } from "../Utils/MyColors";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const statusColors = {
+  processing: "#2196F3",       // Blue
+  "ready for pickup": "#FF9800", // Orange
+  "out for delivery": "#FFC107", // Amber
+  delivered: "#4CAF50",         // Green
+  cancelled: "#F44336",         // Red
+};
+
+
 const Orders = () => {
   const dispatch = useDispatch();
   const { orders, status, error } = useSelector((state) => state.orders);
@@ -28,6 +37,15 @@ const Orders = () => {
       </View>
     );
   }
+
+  const renderStatusBadge = (statusText) => {
+    const color = statusColors[statusText.toLowerCase()] || "#777"; // Default gray
+    return (
+      <View style={[styles.statusBadge, { backgroundColor: color }]}>
+        <Text style={styles.statusText}>{statusText}</Text>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,6 +80,7 @@ const Orders = () => {
             <Text style={styles.pickupText}>
               📍 Pickup: {item.pickup}
             </Text>
+            {renderStatusBadge(item.status)}
           </View>
         )}
       />
@@ -73,72 +92,86 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#F9FBFD", // Very light blueish
   },
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#F9FBFD",
   },
   headerText: {
     textAlign: "center",
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "bold",
     color: myColors.primary,
     marginBottom: 24,
-    letterSpacing: 0.8,
+    letterSpacing: 1,
   },
   orderCard: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 18,
-    marginBottom: 18,
+    borderRadius: 18,
+    padding: 22,
+    marginBottom: 20,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 6,
+    shadowRadius: 12,
+    elevation: 10,
     borderWidth: 1,
-    borderColor: "#ECECEC",
+    borderColor: "#E9EDF1",
   },
   orderDate: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "600",
-    color: "#444",
-    marginBottom: 12,
+    color: "#374151",
+    marginBottom: 14,
   },
   itemContainer: {
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 8,
+    marginBottom: 12,
+    padding: 14,
+    backgroundColor: "#F4F6F9",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#E1E5EA",
   },
   itemName: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 17,
+    fontWeight: "600",
     color: myColors.primary,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   itemDetails: {
-    fontSize: 14,
-    color: "#666",
+    fontSize: 15,
+    color: "#6B7280",
   },
   divider: {
     height: 1,
     backgroundColor: "#DDD",
-    marginVertical: 14,
+    marginVertical: 18,
   },
   totalAmount: {
     fontWeight: "700",
-    fontSize: 18,
-    color: "#333",
-    marginTop: 6,
+    fontSize: 20,
+    color: "#111827",
   },
   pickupText: {
-    fontSize: 15,
-    color: "#666",
-    marginTop: 6,
+    fontSize: 16,
+    color: "#6B7280",
+    marginTop: 8,
+  },
+  statusBadge: {
+    marginTop: 12,
+    alignSelf: "flex-start",
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 16,
+  },
+  statusText: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 14,
+    textTransform: "capitalize",
   },
   errorText: {
     fontSize: 16,

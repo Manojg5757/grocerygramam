@@ -48,7 +48,9 @@ const DeliveryDetails = () => {
           0
         ),
         pickup: pickup,
+        status:"processing",
         orderDate: new Date().toISOString(),
+        createdAt: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
       };
 
       await dispatch(addOrderToFirestore(orderData));
@@ -163,10 +165,10 @@ const DeliveryDetails = () => {
               >
                 🚚
               </Text>
-              <Text style={{ fontSize: 15, flex: 1 }}>
-                Orders above <Text style={{ fontWeight: "bold" }}>₹1499</Text>{" "}
+              <Text style={{ fontSize: 15, flex: 1,color:'black' }}>
+                Orders above <Text style={{ fontWeight: "bold",color:'black' }}>₹1499</Text>{" "}
                 with a minimum of{" "}
-                <Text style={{ fontWeight: "bold" }}>3 products</Text> will be
+                <Text style={{ fontWeight: "bold"}}>3 products</Text> will be
                 delivered to your doorstep within the{" "}
                 <Text style={{ fontWeight: "bold" }}>641671</Text> pincode area.
               </Text>
@@ -182,7 +184,7 @@ const DeliveryDetails = () => {
               >
                 📦
               </Text>
-              <Text style={{ fontSize: 15, flex: 1 }}>
+              <Text style={{ fontSize: 15, flex: 1,color:'black' }}>
                 Orders below <Text style={{ fontWeight: "bold" }}>₹1499</Text>{" "}
                 will be neatly packed and kept ready for pickup at our store.
               </Text>
@@ -199,7 +201,7 @@ const DeliveryDetails = () => {
             backgroundColor: "#fff",
           }}
         >
-          <Text style={{ fontSize: 16,fontWeight:'bold', marginBottom: 10 }}>
+          <Text style={{ fontSize: 16,fontWeight:'bold', marginBottom: 10,color:'black' }}>
             Total Value: ₹{grandTotal}
           </Text>
           <TouchableOpacity

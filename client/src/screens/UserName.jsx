@@ -106,6 +106,7 @@ const UserName = () => {
             fontSize: 16,
             marginTop: 15,
             paddingVertical: 8,
+            color:'black'
           }}
           placeholder="Enter username"
         />

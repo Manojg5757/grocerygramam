@@ -1,12 +1,14 @@
+
+
 import { View, Text, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import React from 'react';
-import FastImage from 'react-native-fast-image';
+import { Image } from 'expo-image';
 import { myColors } from '../Utils/MyColors';
 import { catering } from '../../data';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
-const cardWidth = (width - 45) / 2; // 15 padding + 15 padding + 15 spacing between = 45
+const cardWidth = (width - 45) / 2;
 
 const Catering = () => {
   const renderHeader = () => (
@@ -20,12 +22,11 @@ const Catering = () => {
           paddingBottom: 10,
         }}
       >
-        Sri Sakthi Catering
+        Sri Sakthi Catering Live
       </Text>
-      <FastImage
+      <Image
         source={{
           uri: 'https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fcateringbannertwo.png?alt=media&token=8dcac0d6-3edb-435d-811d-0a30fc45ebfa',
-          priority: FastImage.priority.high,
         }}
         style={{
           width: '100%',
@@ -33,7 +34,8 @@ const Catering = () => {
           borderRadius: 20,
           marginBottom: 20,
         }}
-        resizeMode={FastImage.resizeMode.cover}
+        contentFit="cover"
+        transition={300}
       />
     </View>
   );
@@ -65,15 +67,16 @@ const Catering = () => {
               width: cardWidth,
             }}
           >
-            <FastImage
-              source={{ uri: item.icon, priority: FastImage.priority.normal }}
+            <Image
+              source={{ uri: item.icon }}
               style={{
                 width: '100%',
                 height: cardWidth * 0.75,
                 borderTopLeftRadius: 15,
                 borderTopRightRadius: 15,
               }}
-              resizeMode={FastImage.resizeMode.cover}
+              contentFit="cover"
+              transition={300}
             />
             <View style={{ padding: 10 }}>
               <Text
@@ -126,3 +129,83 @@ const Catering = () => {
 };
 
 export default Catering;
+
+
+
+// import React from "react";
+// import { View, Text, StyleSheet, Image } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import { LinearGradient } from 'expo-linear-gradient';
+
+// const Catering = () => {
+//   return (
+//     <SafeAreaView style={{ flex: 1 }}>
+//       <LinearGradient colors={['#FF5722', '#FFC107']} style={styles.container}>
+//         <View style={styles.content}>
+//           {/* Optional Coming Soon image */}
+//           {/* <Image source={require("../../assets/comingsoon.png")} style={styles.image} /> */}
+
+//           <Text style={styles.title}>Catering Service</Text>
+//           <Text style={styles.subtitle}>Coming Soon!</Text>
+
+//           <Text style={styles.description}>
+//             We're preparing something delicious for your special occasions. Stay tuned!
+//           </Text>
+
+//           <Text style={styles.quote}>
+//             “Traditional food isn’t just a meal, it’s a memory served on a plate.”
+//           </Text>
+//         </View>
+//       </LinearGradient>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   content: {
+//     alignItems: "center",
+//     paddingHorizontal: 20,
+//   },
+//   image: {
+//     width: 250,
+//     height: 250,
+//     resizeMode: "contain",
+//     marginBottom: 20,
+//   },
+//   title: {
+//     fontSize: 36,
+//     fontWeight: "bold",
+//     color: "#FFFFFF",
+//     marginBottom: 8,
+//   },
+//   subtitle: {
+//     fontSize: 28,
+//     color: "#FFFFFF",
+//     marginBottom: 16,
+//   },
+//   description: {
+//     fontSize: 18,
+//     color: "#FFF9C4",
+//     textAlign: "center",
+//     marginBottom: 30,
+//   },
+//   quote: {
+//     fontSize: 20,
+//     color: "#FFFDE7",
+//     fontStyle: "italic",
+//     textAlign: "center",
+//     marginHorizontal: 10,
+//     marginTop: 20,
+//   },
+// });
+
+// export default Catering;
+
+
+
+

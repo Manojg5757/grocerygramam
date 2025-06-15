@@ -3,13 +3,20 @@ import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
 import AppNavigator from "./src/components/Navigation";
 import { notificationListener } from "./src/firebasepush/FirebasePush";
-import * as Notifications from 'expo-notifications';
-import './src/i18n/index.js';
+import * as Notifications from "expo-notifications";
+import * as SplashScreen from "expo-splash-screen";
+import * as Updates from "expo-updates";
+import "./src/i18n/index.js";
 import i18n from "./src/i18n/index.js";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text, Alert } from "react-native";
 
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+Text.defaultProps.style = { color: "black" };
 
-// 👇 Configure how notifications behave
+SplashScreen.preventAutoHideAsync();
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -19,26 +26,52 @@ Notifications.setNotificationHandler({
 });
 
 const App = () => {
-  
-   useEffect(() => {
-   
-      i18n.changeLanguage('ta');  
-      notificationListener();  
-     
- 
+  useEffect(() => {
+    const prepareApp = async () => {
+      try {
+        i18n.changeLanguage("ta");
+        notificationListener();
 
-    return () => {
-      // Cleanup if necessary
+        // 👇 Manual OTA update check
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          Alert.alert(
+            "Update Available",
+            "A new update is available. It will be installed now.",
+            [
+              {
+                text: "Update Now",
+                onPress: async () => {
+                  try {
+                    await Updates.fetchUpdateAsync();
+                    await Updates.reloadAsync(); // App will restart with the update
+                  } catch (err) {
+                    console.log("Update fetch/reload error:", err);
+                  }
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      } catch (e) {
+        console.log("❌ Error during prepareApp", e);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
     };
+
+    prepareApp();
   }, []);
 
   return (
     <SafeAreaProvider>
-    <Provider store={store}>
-      <AppNavigator />
-    </Provider>
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
     </SafeAreaProvider>
   );
 };
 
 export default App;
+ 

@@ -2,28 +2,33 @@ import "dotenv/config";
 
 export default () => ({
   expo: {
-    name: "myproject",
+    name: "Grocery Gramam",
     slug: "myproject",
-    version: "1.9.0",
-    runtimeVersion: { policy: "appVersion" },
+    version: "1.9.1",
+    runtimeVersion: "1.9.1",
     orientation: "portrait",
     icon: "./assets/logo.png",
     userInterfaceStyle: "light",
-    newArchEnabled: false,  
+    newArchEnabled: false,
     loading: {
       hideExponentText: true,
     },
     updates: {
       url: "https://u.expo.dev/167e7f50-4e4d-4acc-9697-ad5ead245124",
-      fallbackToCacheTimeout: 0,
+      fallbackToCacheTimeout: 3000, 
       checkAutomatically: "ON_LOAD",
+      channel: "production"
     },
     plugins: [
       "@react-native-firebase/app",
-      "expo-notifications",  
-      "@react-native-firebase/crashlytics",
-      "expo-updates",
+      "expo-notifications",
+      "@react-native-firebase/crashlytics"
     ],
+    splash: {
+      image: "./assets/logo.png",
+      resizeMode: "contain", // or 'cover'
+      backgroundColor: "#ffffff",
+    },
     ios: {
       supportsTablet: true,
     },

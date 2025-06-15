@@ -82,14 +82,14 @@ export const category = [
   //   "color": "#4a16b9"
   // },
   {
-    "categoryId": "Cat-12",
+    "categoryId": "Cat-11",
     "name_en": "Stationary",
     "name_ta": "ஸ்டேஷனரி",
     "icon": stationary,
     "color": "#2a7fe8"
   },
   {
-    "categoryId": "Cat-13",
+    "categoryId": "Cat-12",
     "name_en": "Sanitary Pads",
     "name_ta": "சானிட்டரி பேட்ஸ்",
     "icon": sanitary,

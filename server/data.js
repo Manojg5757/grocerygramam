@@ -19,6 +19,7 @@ const db = require('./firebase')
       "description_en": "Samba Ravai, a coarse wheat flour variety, is perfect for making upma, pongal, and other South Indian delicacies.",
       "description_ta": "Samba Ravai, a coarse wheat flour variety, is perfect for making upma, pongal, and other South Indian delicacies.",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["Samba Ravai","சம்பா ரவை","uppuma","ravai","உப்புமா","sooji"],
       "user_id": null
     },
     {
@@ -32,10 +33,12 @@ const db = require('./firebase')
       "net_weight": 500,
       "volume_type": "g",
       "stock": 50,
+      "featured":true,
       "categoryId": "Cat-03",
       "description_en": "High-quality wheat flour for soft chapatis, puris, and other Indian breads.",
       "description_ta": "High-quality wheat flour for soft chapatis, puris, and other Indian breads.",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["Wheat Flour","கோதுமை மாவு","asirvad","atta","godhumai maavu"],
       "user_id": null
     },
     {
@@ -49,10 +52,12 @@ const db = require('./firebase')
       "net_weight": 450,
       "volume_type": "g",
       "stock": 50,
+      "featured":true,
       "categoryId": "Cat-03",
       "description_en": "Vermicelli is a versatile, thin noodle made from refined wheat, perfect for sweet or savory dishes. Ideal for making upma, kheer, or pulao quickly and deliciously.",
       "description_ta": "Vermicelli is a versatile, thin noodle made from refined wheat, perfect for sweet or savory dishes. Ideal for making upma, kheer, or pulao quickly and deliciously.",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["Anil Semiya","அணில் சேமியா"],
       "user_id": null
     },
     {
@@ -66,10 +71,12 @@ const db = require('./firebase')
         "net_weight": 500,
         "volume_type": "g",
         "stock": 50,
+         "featured":true,
         "categoryId": "Cat-01",
         "description_en": "Kambu has high source of nutritional value rich in iron, calcium, magnesium and dietary fibre. Pearl Millet is high in fiber and protein and suitable for diabetic people. It reduce the heart disease, stroke Cholesterol etc. Kambu is one of the best source of food which provide healthy nutrition to our body",
         "description_ta": "Kambu has high source of nutritional value rich in iron, calcium, magnesium and dietary fibre. Pearl Millet is high in fiber and protein and suitable for diabetic people. It reduce the heart disease, stroke Cholesterol etc. Kambu is one of the best source of food which provide healthy nutrition to our body",
         "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+        "tage":["Kambu odachadhu","கம்பு உடைத்தது","pearl millet"],
         "user_id": null
       },
       {
@@ -83,10 +90,12 @@ const db = require('./firebase')
         "net_weight": 500,
         "volume_type": "g",
         "stock": 50,
+         "featured":true,
         "categoryId": "Cat-01",
         "description_en": "Red chilli is a fiery spice used in cooking to add heat and flavor. It enhances curries, stir-fries, and marinades while also being rich in antioxidants",
         "description_ta": "Red chilli is a fiery spice used in cooking to add heat and flavor. It enhances curries, stir-fries, and marinades while also being rich in antioxidants",
         "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+        "tags":["Dry Red Chilli","வர மிளகாய்","vara milagai","Guntur Chilli"],
         "user_id": null
       },
     {
@@ -100,10 +109,12 @@ const db = require('./firebase')
       "net_weight": 100,
       "volume_type": "g",
       "stock": 50,
+       "featured":true,
       "categoryId": "Cat-04",
       "description_en": "Pure and aromatic ghee for cooking, garnishing, and enhancing the flavor of your dishes.",
       "description_ta": "Pure and aromatic ghee for cooking, garnishing, and enhancing the flavor of your dishes.",
       "category_id": "32467375-3677-4eb4-be85-7c26ab0c9b05",
+      "tags":["UdhayaKrishna Ghee","உதயகிரிஷ்ணா நெய்","Desi Ghee","cow ghee"],
       "user_id": null
     },
     {
@@ -117,10 +128,12 @@ const db = require('./firebase')
       "net_weight": 5,
       "volume_type": "litre",
       "stock": 50,
+       "featured":true,
       "categoryId": "Cat-04",
       "description_en": "Premium sunflower oil for healthy and tasty cooking.",
       "description_ta": "Premium sunflower oil for healthy and tasty cooking.",
       "category_id": "32467375-3677-4eb4-be85-7c26ab0c9b05",
+      "tags":["gold winner refined oil 5 liter can","5லி கோல்ட் வின்னர்","சமையல் எண்ணெய்"],
       "user_id": null
     },
     {
@@ -138,6 +151,7 @@ const db = require('./firebase')
       "description_en": "High-quality sunflower oil in a convenient 1L pack for everyday use.",
       "description_ta": "High-quality sunflower oil in a convenient 1L pack for everyday use.",
       "category_id": "32467375-3677-4eb4-be85-7c26ab0c9b05",
+      "tags":["1L Gold Winner","1லி கோல்ட் வின்னர்","refined oil","சமையல் எண்ணெய்"],
       "user_id": null
     },
     {
@@ -155,6 +169,7 @@ const db = require('./firebase')
         "description_en": "High-quality sunflower oil in a convenient half pack for everyday use.",
         "description_ta": "High-quality sunflower oil in a convenient half pack for everyday use.",
         "category_id": "32467375-3677-4eb4-be85-7c26ab0c9b05",
+        "tags":["Gold Winner","refined oil","கோல்ட் வின்னர்","சமையல் எண்ணெய்"],
         "user_id": null
       },
       {
@@ -163,7 +178,7 @@ const db = require('./firebase')
         "name_ta": "பாம் ஆயில்",
         "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/thenaleepalmoil.png?alt=media&token=debe88e0-0654-4a34-90c4-b78cff677acc",
         "mrp": 170,
-        "offer_price": 135,
+        "offer_price": 125,
         "discount": 10.0,
         "net_weight": 1,
         "volume_type": "litre",
@@ -172,6 +187,7 @@ const db = require('./firebase')
         "description_en": "High-quality Palm oil in a convenient pack for everyday use.",
         "description_ta": "High-quality Palm oil in a convenient pack for everyday use.",
         "category_id": "32467375-3677-4eb4-be85-7c26ab0c9b05",
+        "tags":["Palmolein","Palm oil","பாம் ஆயில்","bam oil","சமையல் எண்ணெய்"],
         "user_id": null
       },
     
@@ -190,6 +206,25 @@ const db = require('./firebase')
       "description_en": "Tata Salt, a staple for every kitchen, ensures purity and taste.",
       "description_ta": "Tata Salt, a staple for every kitchen, ensures purity and taste.",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["Tata Salt","டாட்டா சால்ட்","uppu","பொடி உப்பு"],
+      "user_id": null
+    },
+     {
+      "id": "d82fed9c-3071-4c12-a014-f8c47182242db1",
+      "name_en": "Rock Salt",
+      "name_ta": "கல் உப்பு",
+      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/rock%20salt%20(1).png?alt=media&token=6fc78ade-b77d-43aa-a193-aae457474bbd",
+      "mrp": 10.0,
+      "offer_price": 9.0,
+      "discount": 14.29,
+      "net_weight": 1,
+      "volume_type": "kg",
+      "stock": 50,
+      "categoryId": "Cat-01",
+      "description_en": "A staple for every kitchen, ensures purity and taste.",
+      "description_ta": "A staple for every kitchen, ensures purity and taste.",
+      "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["kal uppu","கல் உப்பு","Rock Salt"],
       "user_id": null
     },
     {
@@ -198,15 +233,17 @@ const db = require('./firebase')
       "name_ta": "பி.எஸ் அரிசி(26)",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/arisi.png?alt=media&token=e6a28e92-79c3-4c6c-95ad-1e24bb57fbe9",
       "mrp": 2000.0,
-      "offer_price": 1730.0,
+      "offer_price": 1600.0,
       "discount": 13.5,
       "net_weight": 26,
       "volume_type": "kg",
       "stock": 50,
+      "stock_clearance":true,
       "categoryId": "Cat-01",
       "description_en": "Premium quality P.S rice in a large pack",
       "description_ta": "Premium quality P.S rice in a large pack",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+     "tags":["ps arisi","arisi","arici","பி எஸ் அரிசி","sippam","சிப்பம்","rice pack","26 கிலோ அரிசி","26 kilo arisi"],
       "user_id": null
     },
     {
@@ -224,15 +261,16 @@ const db = require('./firebase')
       "description_en": "P.S rice in a 10kg pack for regular family consumption.",
       "description_ta": "P.S rice in a 10kg pack for regular family consumption.",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["ps arisi","arisi","arici","பி எஸ் அரிசி","sippam","சிப்பம்","rice pack","10கிலோ அரிசி","10 kilo arisi"],
       "user_id": null
     },
     {
       "id": "86218004-a7f4-4e35-b5af-ed9f6326facc",
       "name_en": "P.S Arisi 5kg",
-      "name_ta": "பி.எஸ் அரிசி 5கிலோ",
+      "name_ta": "பி.எஸ் அரிசி 5 கிலோ",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/arisi.png?alt=media&token=e6a28e92-79c3-4c6c-95ad-1e24bb57fbe9",
       "mrp": 450.0,
-      "offer_price": 355.0,
+      "offer_price": 325.0,
       "discount": 21.11,
       "net_weight": 5,
       "volume_type": "kg",
@@ -241,6 +279,7 @@ const db = require('./firebase')
       "description_en": "High-quality rice for daily use.",
       "description_ta": "High-quality rice for daily use.",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["ps arisi","arisi","arici","பி எஸ் அரிசி","sippam","சிப்பம்","rice pack","5 கிலோ அரிசி","5 kilo arisi"],
       "user_id": null
     },
     {
@@ -258,25 +297,27 @@ const db = require('./firebase')
         "description_en": "High-quality rice for daily use.",
         "description_ta": "High-quality rice for daily use.",
         "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+        "tags":["thulasi arisi","arisi","arici","துளசி அரிசி","sippam","சிப்பம்","rice pack","26 கிலோ அரிசி","26 kilo arisi"],
         "user_id": null
       },
-    {
-      "id": "c3692bc0-e36e-44e1-81bb-35edd498bf44",
-      "name_en": "Egg",
-      "name_ta": "முட்டை",
-      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/eggs.png?alt=media&token=5e98565a-26b1-47f2-8669-ccbfc645879a",
-      "mrp": 60.0,
-      "offer_price": 4.80,
-      "discount": 8.33,
-      "net_weight": 10,
-      "volume_type": "piece",
-      "stock": 100,
-      "categoryId": "Cat-01",
-      "description_en": "Fresh eggs for all your meals.",
-      "description_ta": "Fresh eggs for all your meals.",
-      "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
-      "user_id": null
-    },
+    // {
+    //   "id": "c3692bc0-e36e-44e1-81bb-35edd498bf44",
+    //   "name_en": "Egg",
+    //   "name_ta": "முட்டை",
+    //   "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/eggs.png?alt=media&token=5e98565a-26b1-47f2-8669-ccbfc645879a",
+    //   "mrp": 60.0,
+    //   "offer_price": 4.80,
+    //   "discount": 8.33,
+    //   "net_weight": 10,
+    //   "volume_type": "piece",
+    //   "stock": 100,
+    //   "categoryId": "Cat-01",
+    //   "description_en": "Fresh eggs for all your meals.",
+    //   "description_ta": "Fresh eggs for all your meals.",
+    //   "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+    //   "tags":["eggs","muttai","முட்டை"],
+    //   "user_id": null
+    // },
     {
       "id": "123a0c6e-3b42-4928-9f1c-d4e81e7b79ee",
       "name_en": "3 Roses Tea (100g)",
@@ -292,6 +333,7 @@ const db = require('./firebase')
       "description_en": "Premium tea leaves for a refreshing experience.",
       "description_ta": "Premium tea leaves for a refreshing experience.",
       "category_id": "d9a66d34-cf38-4d76-b0c4-7a93dd6ef9af",
+      "tags":["3 Roses Tea 100 gram","3 ரோசஸ் டீ 100கிராம்","teas thul","டீ தூள்","tea powder"],
       "user_id": null
     },
     {
@@ -309,6 +351,7 @@ const db = require('./firebase')
         "description_en": "Premium tea leaves for a refreshing experience.",
         "description_ta": "Premium tea leaves for a refreshing experience.",
         "category_id": "d9a66d34-cf38-4d76-b0c4-7a93dd6ef9af",
+        "tags":["3 Roses Tea 250 gram","3 ரோசஸ் டீ 250 கிராம்","teas thul","டீ தூள்","tea powder"],
         "user_id": null
       },
     {
@@ -326,6 +369,7 @@ const db = require('./firebase')
       "description_en": "Economical pack of 3 Roses tea for large families.",
       "description_ta": "Economical pack of 3 Roses tea for large families.",
       "category_id": "d9a66d34-cf38-4d76-b0c4-7a93dd6ef9af",
+      "tags":["3 Roses Tea 1 kilo","3 ரோசஸ் டீ 1 கிலோ","teas thul","டீ தூள்","tea powder"],
       "user_id": null
     },
     {
@@ -343,23 +387,7 @@ const db = require('./firebase')
       "description_en": "Premium quality tea leaves for a rich flavor.",
       "description_ta": "Premium quality tea leaves for a rich flavor.",
       "category_id": "d9a66d34-cf38-4d76-b0c4-7a93dd6ef9af",
-      "user_id": null
-    },
-    {
-      "id": "44d8e411-91b0-4732-9316-9d44252e0fda",
-      "name_en": "Sunrise",
-      "name_ta": "சன் ரைஸ்",
-      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/sunrisesmall.png?alt=media&token=859e76e8-43e9-496a-83bc-1bb5a37bb613",
-      "mrp": 20.0,
-      "offer_price": 19.0,
-      "discount": 5.0,
-      "net_weight": 10,
-      "volume_type": "piece",
-      "stock": 100,
-      "categoryId": "Cat-01",
-      "description_en": "Affordable tea for everyday use.",
-      "description_ta": "Affordable tea for everyday use.",
-      "category_id": "d9a66d34-cf38-4d76-b0c4-7a93dd6ef9af",
+      "tags":["Chakra Gold","சக்ரா கோல்டு"],
       "user_id": null
     },
     {
@@ -377,6 +405,7 @@ const db = require('./firebase')
       "description_en": "Healthy almonds packed with nutrition.",
       "description_ta": "Healthy almonds packed with nutrition.",
       "category_id": "73172b76-6edf-452a-9f23-5b9997526e10",
+      "tags":["almonds","பாதாம்","nuts","badam"],
       "user_id": null
     },
     {
@@ -394,6 +423,7 @@ const db = require('./firebase')
       "description_en": "Fresh cashews for snacking or cooking.",
       "description_ta": "Fresh cashews for snacking or cooking.",
       "category_id": "73172b76-6edf-452a-9f23-5b9997526e10",
+      "tags":["cashew","முந்திரி","nuts","Mundhiri Paruppu"],
       "user_id": null
     },
     {
@@ -411,6 +441,7 @@ const db = require('./firebase')
       "description_en": "Sweet and nutritious dried grapes.",
       "description_ta": "Sweet and nutritious dried grapes.",
       "category_id": "73172b76-6edf-452a-9f23-5b9997526e10",
+      "tags":["raisins","உலர் திராட்சை","dry fruits","thiratchai"],
       "user_id": null
     },
     {
@@ -428,6 +459,7 @@ const db = require('./firebase')
       "description_en": "Soft bread perfect for all meals.",
       "description_ta": "Soft bread perfect for all meals.",
       "category_id": "65292e3a-5fa4-4262-b863-70cc2206f37b",
+      "tags":["bread","பிரட்","rotti","ரொட்டி"],
       "user_id": null
     },
     {
@@ -436,7 +468,7 @@ const db = require('./firebase')
       "name_ta": "கரும்பு சர்க்கரை",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/brownsugar.png?alt=media&token=375e4d5e-ae92-4eb6-bf0b-82beb1d0a696",
       "mrp": 80.0,
-      "offer_price": 63.0,
+      "offer_price": 37.0,
       "discount": 21.25,
       "net_weight": 1,
       "volume_type": "kg",
@@ -445,6 +477,7 @@ const db = require('./firebase')
       "description_en": "Healthy brown sugar for your recipes.",
       "description_ta": "Healthy brown sugar for your recipes.",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["brown sugar","கரும்பு சர்க்கரை","karumbu sakkarai","naatu sakkarai","natu sakkarai"],
       "user_id": null
     },
     {
@@ -453,7 +486,7 @@ const db = require('./firebase')
       "name_ta": "பாசிப்பயிறு",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/paasiparuppu.png?alt=media&token=d6766c59-be31-460c-b402-c7985c3b0353",
       "mrp": 145.0,
-      "offer_price": 135.0,
+      "offer_price": 125.0,
       "discount": 6.9,
       "net_weight": 1,
       "volume_type": "kg",
@@ -462,6 +495,7 @@ const db = require('./firebase')
       "description_en": "Fresh moong dal for your kitchen.",
       "description_ta": "Fresh moong dal for your kitchen.",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["Paasi Payaru","பாசிப்பயிறு","Moong Dal","Green Gram"],
       "user_id": null
     },
 
@@ -471,7 +505,7 @@ const db = require('./firebase')
       "name_ta": "வேர்கடலை",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/groundnut.png?alt=media&token=7b8be5f5-35f6-4a0d-a798-7ea61b831874",
       "mrp": 180.0,
-      "offer_price": 160.0,
+      "offer_price": 130.0,
       "discount": 11.11,
       "net_weight": 1,
       "volume_type": "kg",
@@ -480,6 +514,7 @@ const db = require('./firebase')
       "description_en": "Nutritious groundnuts for snacking.",
       "description_ta": "Nutritious groundnuts for snacking.",
       "category_id": "73172b76-6edf-452a-9f23-5b9997526e10",
+      "tags":["Groundnut","வறுத்த வேர்கடலை","peanuts","varutha Verkadalai", "Nilakadalai","நிலக்கடலை"],
       "user_id": null
     },
     {
@@ -488,7 +523,7 @@ const db = require('./firebase')
       "name_ta": "மல்லி",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/malli.png?alt=media&token=12f60e4b-47b3-4d6d-9866-145ed0c6dd4c",
       "mrp": 60.0,
-      "offer_price": 55.0,
+      "offer_price": 45.0,
       "discount": 8.33,
       "net_weight": 250,
       "volume_type": "g",
@@ -497,6 +532,7 @@ const db = require('./firebase')
       "description_en": "Fresh coriander for your cooking.",
       "description_ta": "Fresh coriander for your cooking.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["malli","மல்லி"],
       "user_id": null
     },
     {
@@ -516,6 +552,7 @@ const db = require('./firebase')
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
       "created_at": "2025-01-07T15:42:18.686+05:30",
       "updated_at": "2025-01-07T15:42:18.686+05:30",
+      "tags":["Briyani leaf","பிரியாணி இலை"],
       "user_id": null
     },
     {
@@ -533,6 +570,7 @@ const db = require('./firebase')
       "description_en": "Fresh Roja flowers for biryani and other culinary uses.",
       "description_ta": "Fresh Roja flowers for biryani and other culinary uses.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["Roja poo","ரோஜா பூ","roase petals"],
       "user_id": null
     },
     {
@@ -550,6 +588,7 @@ const db = require('./firebase')
       "description_en": "Annachi flower used in traditional South Indian cooking.",
       "description_ta": "Annachi flower used in traditional South Indian cooking.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["annachi poo","அண்ணாச்சி பூ","star anise","ஸ்டார்","briyani ingredients"],
       "user_id": null
     },
     {
@@ -567,6 +606,7 @@ const db = require('./firebase')
       "description_en": "Kalpasi, also known as black stone flower, enhances flavor in biryani.",
       "description_ta": "Kalpasi, also known as black stone flower, enhances flavor in biryani.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["kalpasi","கல்பாசி","black stone flower"],
       "user_id": null
     },
     {
@@ -584,12 +624,13 @@ const db = require('./firebase')
       "description_en": "Maratti flower, a key ingredient in biryani recipes.",
       "description_ta": "Maratti flower, a key ingredient in biryani recipes.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["maratti mokku","மராட்டி மொக்கு","briyani ingredients","marathi moggu","kapok buds","briyani ingredients"],
       "user_id": null
     },
     {
       "id": "cf4995b9-7bf9-4ff5-98dd-85a257e2c4dd",
-      "name_en": "Pattai",
-      "name_ta": "பட்டை",
+      "name_en": "Lavanga Pattai",
+      "name_ta": "லவங்க பட்டை",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/pattai.png?alt=media&token=0a028789-048e-4645-8af4-f2ec07246683",
       "mrp": 45.0,
       "offer_price": 35.0,
@@ -601,6 +642,7 @@ const db = require('./firebase')
       "description_en": "Cinnamon sticks (Pattai) for adding flavor to rice and biryani.",
       "description_ta": "Cinnamon sticks (Pattai) for adding flavor to rice and biryani.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["லவங்க பட்டை","lavanga pattai","cinnamon","spice","briyani ingredients"],
       "user_id": null
     },
     {
@@ -608,8 +650,8 @@ const db = require('./firebase')
       "name_en": "Seeragam",
       "name_ta": "சீரகம்",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/seeragam.png?alt=media&token=bbfd2953-eb3b-443d-b64e-802adab0eda5",
-      "mrp": 70.0,
-      "offer_price": 55.0,
+      "mrp": 50.0,
+      "offer_price": 40.0,
       "discount": 21.43,
       "net_weight": 100,
       "volume_type": "g",
@@ -618,6 +660,7 @@ const db = require('./firebase')
       "description_en": "Seeragam (Cumin) used for seasoning biryanis and curries.",
       "description_ta": "Seeragam (Cumin) used for seasoning biryanis and curries.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["சீரகம்","seeragam","cumins","jeera","spices","briyani ingredients"],
       "user_id": null
     },
     {
@@ -635,6 +678,7 @@ const db = require('./firebase')
       "description_en": "Cloves (Kirambu) add spice to biryani and various curries.",
       "description_ta": "Cloves (Kirambu) add spice to biryani and various curries.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["kirambu","cloves","கிராம்பு","spices","briyani ingredients"],
       "user_id": null
     },
     {
@@ -652,6 +696,7 @@ const db = require('./firebase')
       "description_en": "Soombu (Fennel seeds) for a fragrant and flavorful biryani.",
       "description_ta": "Soombu (Fennel seeds) for a fragrant and flavorful biryani.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["soombu","சோம்பு","fennel seeds","spices","briyani ingredients"],
       "user_id": null
     },
     {
@@ -669,6 +714,7 @@ const db = require('./firebase')
         "description_en": "Chilli powder enhances flavor and adds heat to curries, marinades, snacks, and spice blends. A must-have for Indian cooking",
         "description_ta": "Chilli powder enhances flavor and adds heat to curries, marinades, snacks, and spice blends. A must-have for Indian cooking",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Chilli powder","சக்தி மிளகாய் தூள்"],
         "user_id": null
       },
       {
@@ -686,6 +732,7 @@ const db = require('./firebase')
         "description_en": "Chicken Masala adds rich flavor and aroma to curries, grills, and marinades, making every dish deliciously spiced",
         "description_ta": "Chicken Masala adds rich flavor and aroma to curries, grills, and marinades, making every dish deliciously spiced",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Chicken Masala","சக்தி சிக்கன் மசாலா","chicken","gravy"],
         "user_id": null
       },
       {
@@ -703,6 +750,7 @@ const db = require('./firebase')
         "description_en": "Coriander powder enhances curries, chutneys, and marinades with its warm, citrusy flavor, making dishes more aromatic and flavorful",
         "description_ta": "Coriander powder enhances curries, chutneys, and marinades with its warm, citrusy flavor, making dishes more aromatic and flavorful",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Coricander Powder","சக்தி மல்லித் தூள்","masala"],
         "user_id": null
       },
       {
@@ -720,6 +768,7 @@ const db = require('./firebase')
         "description_en": "A tasty traditional sambar made with taste and love",
         "description_ta": "A tasty traditional sambar made with taste and love",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Sambar Powder","சக்தி சாம்பார் தூள்"],
         "user_id": null
       },
       {
@@ -737,6 +786,7 @@ const db = require('./firebase')
         "description_en": "A hot rasam will clear your throat",
         "description_ta": "A hot rasam will clear your throat",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Rasam Powder","சக்தி ரசத்தூள்","ரசம்"],
         "user_id": null
       },
       {
@@ -754,6 +804,7 @@ const db = require('./firebase')
         "description_en": "Love mutton make mutton curry now",
         "description_ta": "Love mutton make mutton curry now",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Mutton Masala","சக்தி மட்டன் மசாலா"],
         "user_id": null
       },
       {
@@ -771,6 +822,7 @@ const db = require('./firebase')
         "description_en": "An extra flavor to your food",
         "description_ta": "An extra flavor to your food",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi garam Masala","சக்தி கரம் மசாலா"],
         "user_id": null
       },
       {
@@ -788,6 +840,7 @@ const db = require('./firebase')
         "description_en": "Make curry fast and tasty",
         "description_ta": "Make curry fast and tasty",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi curry Masala","சக்தி கறி மசாலா"],
         "user_id": null
       },
       {
@@ -805,6 +858,7 @@ const db = require('./firebase')
         "description_en": "Enhance flavor with vibrant color",
         "description_ta": "Enhance flavor with vibrant color",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Turmeric Powder","சக்தி மஞ்சள் தூள்"],
         "user_id": null
       },
       {
@@ -822,6 +876,7 @@ const db = require('./firebase')
         "description_en": "Enhance flavor with vibrant color",
         "description_ta": "Enhance flavor with vibrant color",
         "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+        "tags":["Sakthi Briyani Masala","சக்தி பிரியாணி மசாலா"],
         "user_id": null
       },
     {
@@ -839,6 +894,7 @@ const db = require('./firebase')
       "description_en": "Corn flour, commonly used for thickening sauces and gravies.",
       "description_ta": "Corn flour, commonly used for thickening sauces and gravies.",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["Corn flour","கார்ன் பிளார் மாவு"],
       "user_id": null
     },
     { 
@@ -856,6 +912,7 @@ const db = require('./firebase')
       "description_en": "Mustard seeds for adding flavor to various dishes and pickles.",
       "description_ta": "Mustard seeds for adding flavor to various dishes and pickles.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["mustard","கடுகு"],
       "user_id": null
     },
     {
@@ -873,6 +930,7 @@ const db = require('./firebase')
       "description_en": "Vendhayam (Fenugreek) used in cooking and for medicinal purposes.",
       "description_ta": "Vendhayam (Fenugreek) used in cooking and for medicinal purposes.",
       "category_id": "c0f69632-1af0-416c-8551-0cea3506c654",
+      "tags":["Vendhayam","வெந்தயம்","fenugreek seeds"],
       "user_id": null
     },
     {
@@ -881,7 +939,7 @@ const db = require('./firebase')
       "name_ta": "பூண்டு",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/garlic.png?alt=media&token=794c74eb-eecd-43c4-ae70-eaeaa6618fef",
       "mrp": 450.0,
-      "offer_price": 325.0,
+      "offer_price": 180.0,
       "discount": 27.78,
       "net_weight": 1,
       "volume_type": "kg",
@@ -890,93 +948,95 @@ const db = require('./firebase')
       "description_en": "Garlic for a strong flavor in curries and other dishes.",
       "description_ta": "Garlic for a strong flavor in curries and other dishes.",
       "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+      "tags":["garlic","poondu","பூண்டு"],
       "user_id": null
     },
-    {
-      "id": "490078f0-c43e-476f-9667-64880bab09c1",
-      "name_en": "Big Onion",
-      "name_ta": "வெங்காயம்",
-      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/onion.png?alt=media&token=9011e22d-6581-465d-a0f6-8be7b0c2978a",
-      "mrp": 100.0,
-      "offer_price": 70.0,
-      "discount": 30.0,
-      "net_weight": 1,
-      "volume_type": "kg",
-      "stock": 50,
-      "categoryId": "Cat-11",
-      "description_en": "Onions for use in curries, stews, and other everyday dishes.",
-      "description_ta": "Onions for use in curries, stews, and other everyday dishes.",
-      "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
-      "user_id": null
-    },
-    {
-      "id": "85678bac-ab54-4a75-9741-c090c352c7bb",
-      "name_en": "Tomato",
-      "name_ta": "தக்காளி",
-      "icon": "tomato.png",
-      "mrp": 60.0,
-      "offer_price": 40.0,
-      "discount": 33.33,
-      "net_weight": 1,
-      "volume_type": "kg",
-      "stock": 50,
-      "categoryId": "Cat-11",
-      "description_en": "Fresh tomatoes for curries, sauces, and salads.",
-      "description_ta": "Fresh tomatoes for curries, sauces, and salads.",
-      "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
-      "user_id": null
-    },
-    {
-      "id": "6a892288-7128-405f-951f-af3a9b889a56",
-      "name_en": "Carrot",
-      "name_ta": "கேரட்",
-      "icon": "carrot.png",
-      "mrp": 200.0,
-      "offer_price": 60.0,
-      "discount": 70.0,
-      "net_weight": 1,
-      "volume_type": "kg",
-      "stock": 50,
-      "categoryId": "Cat-11",
-      "description_en": "Fresh carrots used in salads, soups, and cooking.",
-      "description_ta": "Fresh carrots used in salads, soups, and cooking.",
-      "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
-      "user_id": null
-    },
-    {
-      "id": "a85bd2f0-ce90-4b16-b8dc-c8f939131412",
-      "name_en": "Cucumber",
-      "name_ta": "வெள்ளரி",
-      "icon": "cucumber.png",
-      "mrp": 150.0,
-      "offer_price": 120.0,
-      "discount": 20.0,
-      "net_weight": 1,
-      "volume_type": "kg",
-      "stock": 50,
-      "categoryId": "Cat-11",
-      "description_en": "Fresh cucumber used in salads and as a refreshing snack.",
-      "description_ta": "Fresh cucumber used in salads and as a refreshing snack.",
-      "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
-      "user_id": null
-    },
-    {
-      "id": "8b7dd928-bb56-47bd-9ea7-5dfc61cf6eb1",
-      "name_en": "Green chili",
-      "name_ta": "பச்சை மிளகாய்",
-      "icon": "green_chili.png",
-      "mrp": 80.0,
-      "offer_price": 60.0,
-      "discount": 25.0,
-      "net_weight": 1,
-      "volume_type": "kg",
-      "stock": 50,
-      "categoryId": "Cat-11",
-      "description_en": "Fresh green chilies for adding spice to your dishes.",
-      "description_ta": "Fresh green chilies for adding spice to your dishes.",
-      "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
-      "user_id": null
-    },
+    // {
+    //   "id": "490078f0-c43e-476f-9667-64880bab09c1",
+    //   "name_en": "Big Onion",
+    //   "name_ta": "வெங்காயம்",
+    //   "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/onion.png?alt=media&token=9011e22d-6581-465d-a0f6-8be7b0c2978a",
+    //   "mrp": 100.0,
+    //   "offer_price": 70.0,
+    //   "discount": 25.0,
+    //   "net_weight": 1,
+    //   "volume_type": "kg",
+    //   "stock": 50,
+    //   "categoryId": "veggies",
+    //   "description_en": "Onions for use in curries, stews, and other everyday dishes.",
+    //   "description_ta": "Onions for use in curries, stews, and other everyday dishes.",
+    //   "category_id": "0ba5ed11-459a-4ef8-9828-0f6204080b62",
+    //   "tags":["big onion","ballari","வெங்காயம்","periya vengayam","பல்லாரி"],
+    //   "user_id": null
+    // },
+    // {
+    //   "id": "85678bac-ab54-4a75-9741-c090c352c7bb",
+    //   "name_en": "Tomato",
+    //   "name_ta": "தக்காளி",
+    //   "icon": "tomato.png",
+    //   "mrp": 60.0,
+    //   "offer_price": 40.0,
+    //   "discount": 33.33,
+    //   "net_weight": 1,
+    //   "volume_type": "kg",
+    //   "stock": 50,
+    //   "categoryId": "veggies",
+    //   "description_en": "Fresh tomatoes for curries, sauces, and salads.",
+    //   "description_ta": "Fresh tomatoes for curries, sauces, and salads.",
+    //   "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
+    //   "user_id": null
+    // },
+    // {
+    //   "id": "6a892288-7128-405f-951f-af3a9b889a56",
+    //   "name_en": "Carrot",
+    //   "name_ta": "கேரட்",
+    //   "icon": "carrot.png",
+    //   "mrp": 200.0,
+    //   "offer_price": 60.0,
+    //   "discount": 70.0,
+    //   "net_weight": 1,
+    //   "volume_type": "kg",
+    //   "stock": 50,
+    //   "categoryId": "veggies",
+    //   "description_en": "Fresh carrots used in salads, soups, and cooking.",
+    //   "description_ta": "Fresh carrots used in salads, soups, and cooking.",
+    //   "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
+    //   "user_id": null
+    // },
+    // {
+    //   "id": "a85bd2f0-ce90-4b16-b8dc-c8f939131412",
+    //   "name_en": "Cucumber",
+    //   "name_ta": "வெள்ளரி",
+    //   "icon": "cucumber.png",
+    //   "mrp": 150.0,
+    //   "offer_price": 120.0,
+    //   "discount": 20.0,
+    //   "net_weight": 1,
+    //   "volume_type": "kg",
+    //   "stock": 50,
+    //   "categoryId": "veggies",
+    //   "description_en": "Fresh cucumber used in salads and as a refreshing snack.",
+    //   "description_ta": "Fresh cucumber used in salads and as a refreshing snack.",
+    //   "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
+    //   "user_id": null
+    // },
+    // {
+    //   "id": "8b7dd928-bb56-47bd-9ea7-5dfc61cf6eb1",
+    //   "name_en": "Green chili",
+    //   "name_ta": "பச்சை மிளகாய்",
+    //   "icon": "green_chili.png",
+    //   "mrp": 80.0,
+    //   "offer_price": 60.0,
+    //   "discount": 25.0,
+    //   "net_weight": 1,
+    //   "volume_type": "kg",
+    //   "stock": 50,
+    //   "categoryId": "veggies",
+    //   "description_en": "Fresh green chilies for adding spice to your dishes.",
+    //   "description_ta": "Fresh green chilies for adding spice to your dishes.",
+    //   "category_id": "da562bf5-b5ae-452f-a9e7-6cb27a243964",
+    //   "user_id": null
+    // },
     {
       "id": "d1d20d34-1ea2-460d-a6cb-3bb3385c90b0",
       "name_en": "Colgate",
@@ -992,6 +1052,7 @@ const db = require('./firebase')
       "description_en": "Colgate toothpaste.",
       "description_ta": "Colgate toothpaste.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["Colgate paste","கோல்கேட் பேஸ்ட்"],
       "user_id": null
     },
     {
@@ -1003,12 +1064,31 @@ const db = require('./firebase')
       "offer_price": 23.0,
       "discount": 13.21,
       "net_weight": 1,
-      "volume_type": "g",
+      "volume_type": "piece",
       "stock": 50,
       "categoryId": "Cat-09",
       "description_en": "Arasan soap.",
       "description_ta": "Arasan soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["arasan soap","அரசன் சோப்பு","detergent cake"],
+      "user_id": null
+    },
+    {
+      "id": "e63f7a8b-5e80-4709-ab25-4df194c626848d",
+      "name_en": "SurfExcel Soap",
+      "name_ta": "சர்ப் எக்ஸல் சோப்பு",
+      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/surfexcelsoap.png?alt=media&token=bbac20dd-945d-4bfc-bd6d-df6cf68e87fa",
+      "mrp": 32,
+      "offer_price": 30.0,
+      "discount": 13.21,
+      "net_weight": 1,
+      "volume_type": "piece",
+      "stock": 50,
+      "categoryId": "Cat-09",
+      "description_en": "Best soap for you rclothes.",
+      "description_ta": "Best soap for you rclothes.",
+      "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["surf excel soap","சர்ப் எக்ஸல் சோப்பு","detergent cake"],
       "user_id": null
     },
     {
@@ -1026,11 +1106,12 @@ const db = require('./firebase')
       "description_en": "Arasan yellow soap.",
       "description_ta": "Arasan yellow soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["arasan soap yellow","அரசன் சோப்பு மஞ்சள்","detergent cake"],
       "user_id": null
     },
     {
       "id": "308fd864-c9c8-4f41-84bc-e658b36c22de",
-      "name_en": "Maya Detergent",
+      "name_en": "Maya Soap",
       "name_ta": "மாயா சோப்பு",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/mayablue.png?alt=media&token=4d177e9e-4bbe-4102-8ca6-aa81f15bcb9f",
       "mrp": 20.0,
@@ -1043,6 +1124,7 @@ const db = require('./firebase')
       "description_en": "Maya soap.",
       "description_ta": "Maya soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["maya soap","detergent soap","மாயா சோப்பு"],
       "user_id": null
     },
     {
@@ -1060,23 +1142,7 @@ const db = require('./firebase')
       "description_en": "Maya green soap.",
       "description_ta": "Maya green soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
-      "user_id": null
-    },
-    {
-      "id": "3e440cc2-b611-47e0-9592-1c92c47c4f7c",
-      "name_en": "Karthika Shampoo",
-      "name_ta": "கார்த்திகா சேம்ப் ",
-      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/karthikashampoo.png?alt=media&token=fba797e6-97b2-4453-8a62-743cf92517dd",
-      "mrp": 20.0,
-      "offer_price": 19.0,
-      "discount": 5.0,
-      "net_weight": 20,
-      "volume_type": "piece",
-      "stock": 100,
-      "categoryId": "Cat-10",
-      "description_en": "Karthika shampoo.",
-      "description_ta": "Karthika shampoo.",
-      "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["maya soap","dishwaser soap","மாயா சோப்பு"],
       "user_id": null
     },
     {
@@ -1094,6 +1160,7 @@ const db = require('./firebase')
       "description_en": "LifeBuoy soap.",
       "description_ta": "LifeBuoy soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["lifebuoy","lifeboy","lifebuy","லைஃபாய்","லைபாய்","soap","சோப்பு"],
       "user_id": null
     },
     {
@@ -1111,6 +1178,7 @@ const db = require('./firebase')
       "description_en": "Hamam soap.",
       "description_ta": "Hamam soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["hamam soap","ஹமாம்"],
       "user_id": null
     },
     {
@@ -1128,6 +1196,7 @@ const db = require('./firebase')
       "description_en": "Cinthol soap.",
       "description_ta": "Cinthol soap.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["cinthol","cinthal","cindhal","சின்தால்"],
       "user_id": null
     },
     {
@@ -1145,6 +1214,7 @@ const db = require('./firebase')
       "description_en": "Mysore sandal soap pack.",
       "description_ta": "Mysore sandal soap pack.",
       "category_id": "14e9de61-96f8-423f-84c8-5a63b9643f7f",
+      "tags":["Mysore Sandal soap","மைசூர் சேண்டல்","சோப்பு"],
       "user_id": null
     },
     {
@@ -1158,16 +1228,17 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-13",
+      "categoryId": "Cat-12",
       "description_en": "Whisper sanitary napkins.",
       "description_ta": "Whisper sanitary napkins.",
       "category_id": "fa2c9e55-3a75-445d-91f8-8f35683f509b",
+      "tags":["whisper","sanitary pads","napkin","விஸ்பர்","Menstrual Pads"],
       "user_id": null
     },
     {
       "id": "096042a5-c2dd-4a96-a424-57c2ad086cca",
       "name_en": "Stayfree",
-      "name_ta": "ஸ்டே ஃப்ரீ",
+      "name_ta": "ஸ்டேஃப்ரீ",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/stafreexl.png?alt=media&token=dcde0f08-510c-482b-bb07-fda7a0774fe6",
       "mrp": 50.0,
       "offer_price": 48.0,
@@ -1175,10 +1246,11 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-13",
+      "categoryId": "Cat-12",
       "description_en": "Stayfree sanitary napkins.",
       "description_ta": "Stayfree sanitary napkins.",
       "category_id": "fa2c9e55-3a75-445d-91f8-8f35683f509b",
+      "tags":["Stayfree","sanitary pads","napkin","Menstrual Pads","ஸ்டேப்ரீ"],
       "user_id": null
     },
     {
@@ -1192,10 +1264,29 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-12",
+      "categoryId": "Cat-11",
       "description_en": "Longsize notebook.",
       "description_ta": "Longsize notebook.",
       "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["Longsize Notebook","note","லாங் சைஸ் நோட்","ruled note","unruled note"],
+      "user_id": null
+    },
+    {
+      "id": "95d169fd-2117-4074-ad41-4276de12e56ee2",
+      "name_en": "King size Note",
+      "name_ta": "கிங் சைஸ் நோட்",
+      "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/notebook.png?alt=media&token=48a1f4d2-5177-4c4f-ad5b-c3adfb650bd9",
+      "mrp": 60.0,
+      "offer_price": 34.0,
+      "discount": 42.86,
+      "net_weight": 1,
+      "volume_type": "piece",
+      "stock": 100,
+      "categoryId": "Cat-11",
+      "description_en": "KingSize notebook.",
+      "description_ta": "KingSize notebook.",
+      "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["Kingize Notebook","note","லாங் சைஸ் நோட்","ruled note","unruled note"],
       "user_id": null
     },
     {
@@ -1204,15 +1295,16 @@ const db = require('./firebase')
       "name_ta": "ஸ்டம்பர்",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/stumperball.png?alt=media&token=8290db74-0d6a-47ff-89c6-95fb0e901621",
       "mrp": 40.0,
-      "offer_price": 30.0,
+      "offer_price": 32.0,
       "discount": 25.0,
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-12",
+      "categoryId": "Cat-11",
       "description_en": "Stumper ball.",
       "description_ta": "Stumper ball.",
       "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["Stumper Ball","cricket ball","sports","ஸ்டம்பர்"],
       "user_id": null
     },
     {
@@ -1226,10 +1318,11 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-12",
+      "categoryId": "Cat-11",
       "description_en": "Anabond adhesive.",
       "description_ta": "Anabond adhesive.",
       "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["Anabond","அனபான்ட்","gum"],
       "user_id": null
     },
     {
@@ -1243,10 +1336,11 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-12",
+      "categoryId": "Cat-11",
       "description_en": "AA battery.",
       "description_ta": "AA battery.",
       "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["AA Battery","AA பேட்டரி","cell","clock battery","remote battery"],
       "user_id": null
     },
     {
@@ -1260,10 +1354,11 @@ const db = require('./firebase')
       "net_weight": 1,
       "volume_type": "piece",
       "stock": 100,
-      "categoryId": "Cat-12",
+      "categoryId": "Cat-11",
       "description_en": "AAA battery.",
       "description_ta": "AAA battery.",
       "category_id": "1bf1dbef-ff04-489e-ae8f-13544a4e75d5",
+      "tags":["AAA Battery","AAA பேட்டரி","cell","clock battery","remote battery"],
       "user_id": null
     },
     {
@@ -1281,6 +1376,7 @@ const db = require('./firebase')
       "description_en": "Cool down",
       "description_ta": "Cool down",
       "category_id": "224c7822-5022-45ea-aec6-e32ccc702eee",
+      "tags":["7UP 2.25 litre","7 up","7","7 up juice","soft drinks"],
       "user_id": null
     },
     {
@@ -1297,6 +1393,7 @@ const db = require('./firebase')
       "categoryId": "Cat-07",
       "description_en": "Cool down",
       "description_ta": "Cool down",
+      "tags":["7 up","7","7 up juice","soft drinks","7 up half litre"],
       "user_id": null
     },
     {
@@ -1313,6 +1410,7 @@ const db = require('./firebase')
       "categoryId": "Cat-07",
       "description_en": "Cool down",
       "description_ta": "Cool down",
+      "tags":["sprite","soft drinks"],
       "user_id": null
     },
     {
@@ -1329,6 +1427,7 @@ const db = require('./firebase')
       "categoryId": "Cat-09",
       "description_en": "Ariel for your clothes",
       "description_ta": "Ariel for your clothes",
+      "tags":["Ariel detergent Powder","ariel matic","Detergent Powder"],
       "user_id": null
     },
     {
@@ -1345,6 +1444,7 @@ const db = require('./firebase')
       "categoryId": "Cat-09",
       "description_en": "Surf Excel for your clothes",
       "description_ta": "Surf Excel for your clothes",
+      "tags":["surf excel","சர்ப் எக்ஸல்","washing powder","Detergent Powder"],
       "user_id": null
     },
     {
@@ -1361,6 +1461,7 @@ const db = require('./firebase')
       "categoryId": "Cat-09",
       "description_en": "Rin Powder for your clothes",
       "description_ta": "Rin Powder for your clothes",
+      "tags":["rin powder","ரின் பவுடர்","washing powder","Detergent Powder"],
       "user_id": null
     },
     {
@@ -1377,6 +1478,7 @@ const db = require('./firebase')
       "categoryId": "Cat-03",
       "description_en": "Delicious bajji fro evening snack",
       "description_ta": "Delicious bajji fro evening snack",
+      "tags":["Sakthi Bajji Maavu","சக்தி பஜ்ஜி மாவு","flour","bonda","போண்டா"],
       "user_id": null
     },
     {
@@ -1385,7 +1487,7 @@ const db = require('./firebase')
       "name_ta": "மைதா மாவு",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/maidhamaavu.png?alt=media&token=0e166427-5a05-49c8-b28c-133ee48a473e",
       "mrp": 50,
-      "offer_price": 30,
+      "offer_price": 29,
       "discount": 31.58,
       "net_weight": 500,
       "volume_type": "g",
@@ -1393,6 +1495,7 @@ const db = require('./firebase')
       "categoryId": "Cat-03",
       "description_en": "Maidha for Parotta and so many",
       "description_ta": "Maidha for Parotta and so many",
+      "tags":["maidha maavu","மைதா மாவு","மைதா மாவு","parotta","பரோட்டா"],
       "user_id": null
     },
     {
@@ -1409,6 +1512,7 @@ const db = require('./firebase')
       "categoryId": "Cat-10",
       "description_en": "Colgate(100g)",
       "description_ta": "Colgate(100g)",
+      "tags":["colgate 100 gram","கோல்கேட் 100கிராம்","toothpaste"],
       "user_id": null
     },
     {
@@ -1425,6 +1529,7 @@ const db = require('./firebase')
       "categoryId": "Cat-10",
       "description_en": "Super Flexi ToothBrush",
       "description_ta": "Super Flexi ToothBrush",
+      "tags":["Super Flexi ToothBrush","colgate toothbrush"],
       "user_id": null
     },
     {
@@ -1441,6 +1546,7 @@ const db = require('./firebase')
       "categoryId": "Cat-10",
       "description_en": "Dabur Red 100g",
       "description_ta": "Dabur Red 100g",
+      "tags":["Dabur Red paste 100 gram","டாபர் ரெட் 100கி","toothpaste"],
       "user_id": null
     },
     {
@@ -1457,6 +1563,7 @@ const db = require('./firebase')
       "categoryId": "Cat-09",
       "description_en": "Exo Scrubber(Steel)",
       "description_ta": "Exo Scrubber(Steel)",
+      "tags":["Exo Scrubber","எக்சோ ஸ்கிரப்பர்","dishwasher","steel scrubber","kambi manji","manji","கம்பி மஞ்சி"],
       "user_id": null
     },
     {
@@ -1473,6 +1580,7 @@ const db = require('./firebase')
       "categoryId": "Cat-09",
       "description_en": "Exo Scrubber",
       "description_ta": "Exo Scrubber",
+      "tags":["Exo Scrubber","எக்சோ ஸ்கிரப்பர்","dishwasher","pachai manji","manji","பச்சை மஞ்சி"],
       "user_id": null
     },
     {
@@ -1481,7 +1589,7 @@ const db = require('./firebase')
       "name_ta": "கடலை மாவு",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/kadalaimaavu.png?alt=media&token=c364ed48-b5cf-43d6-bdd1-aa58bd3604ab",
       "mrp": 85,
-      "offer_price": 70,
+      "offer_price": 58,
       "discount": 31.58,
       "net_weight": 500,
       "volume_type": "g",
@@ -1489,6 +1597,7 @@ const db = require('./firebase')
       "categoryId": "Cat-03",
       "description_en": "Kadalai Maavu",
       "description_ta": "Kadalai Maavu",
+      "tags":["கடலை மாவு","kadalai maavu","flour","bajji","bonda","laddu"],
       "user_id": null
     },
     {
@@ -1505,6 +1614,7 @@ const db = require('./firebase')
       "categoryId": "Cat-01",
       "description_en": "Eco Friendly Plates",
       "description_ta": "Eco Friendly Plates",
+      "tags":["paaku thattam","பாக்கு தட்டம்","one use plates","wooden areca","eco freindly","plates"],
       "user_id": null
     },
     {
@@ -1521,6 +1631,7 @@ const db = require('./firebase')
       "categoryId": "Cat-01",
       "description_en": "Soya Chunks",
       "description_ta": "Soya Chunks",
+      "tags":["Soya Chunks","பெரிய சோயா","meal maker"],
       "user_id": null
     },
     {
@@ -1537,6 +1648,7 @@ const db = require('./firebase')
       "categoryId": "Cat-10",
       "description_en": "VIP Hair Color",
       "description_ta": "VIP Hair Color",
+      "tags":["VIP Hair Color","விஐபி ஹேர் கலர்","hair dye"],
       "user_id": null
     },
     {
@@ -1553,6 +1665,7 @@ const db = require('./firebase')
       "categoryId": "Cat-02",
       "description_en": "Madhu Briyani Paste",
       "description_ta": "Madhu Briyani Paste",
+      "tags":["Madhu Briyani Paste","மது பிரியாணி பேஸ்ட்","briyani masala","பிரியாணி மசாலா"],
       "user_id": null
     },
     {
@@ -1569,6 +1682,7 @@ const db = require('./firebase')
       "categoryId": "Cat-01",
       "description_en": "AVT Tea Dust for best strong tea",
       "description_ta": "AVT Tea Dust for best strong tea",
+      "tags":["AVT Tea Dust","எவிடி டீ தூள்","tew powder"],
       "user_id": null
     }
     

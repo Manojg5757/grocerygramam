@@ -7,6 +7,7 @@ exports.notifyAdminOnOrder = functions.firestore
   .document("orders/{orderId}")
   .onCreate(async (snap, context) => {
     const order = snap.data();
+    const orderId = context.params.orderId;
 
     try {
       // 🔍 Fetch the first admin document where role == "admin"
@@ -18,36 +19,81 @@ exports.notifyAdminOnOrder = functions.firestore
 
       if (adminQuerySnapshot.empty) {
         console.warn("🚫 No admin found");
+      } else {
+        const adminDoc = adminQuerySnapshot.docs[0];
+        const adminData = adminDoc.data();
+        const adminFcmToken = adminData.fcmToken;
+
+        if (adminFcmToken) {
+          // 📢 Send notification to admin
+          const adminMessage = {
+            notification: {
+              title: "🛒 New Order Placed",
+              body: `Order from ${order.customerName || "Customer"}`,
+            },
+            data: {
+              type: "order",
+              orderId: orderId,
+              customerName: order.customerName || "Customer",
+            },
+            token: adminFcmToken,
+          };
+
+          const adminResponse = await admin.messaging().send(adminMessage);
+          console.log("✅ Admin notification sent:", adminResponse);
+        } else {
+          console.warn("⚠️ Admin FCM token not found");
+        }
+      }
+
+      // 📲 Notify the customer
+      const customerId = order.userId;
+      if (!customerId) {
+        console.warn("⚠️ Order missing userId");
         return;
       }
 
-      const adminDoc = adminQuerySnapshot.docs[0];
-      const adminData = adminDoc.data();
-      const adminFcmToken = adminData.fcmToken;
-      console.log("🔑 Admin FCM token:", adminFcmToken);
+      // 🔍 Fetch customer details
+      const customerDoc = await admin.firestore()
+        .collection("users")
+        .doc(customerId)
+        .get();
 
-      if (!adminFcmToken) {
-        console.warn("⚠️ Admin FCM token not found");
+      if (!customerDoc.exists) {
+        console.warn("🚫 Customer not found");
         return;
       }
 
-      // 📢 Prepare and send the notification
-      const message = {
+      const customerData = customerDoc.data();
+      const customerFcmToken = customerData.fcmToken;
+
+      if (!customerFcmToken) {
+        console.warn("⚠️ Customer FCM token not found");
+        return;
+      }
+
+      // 📢 Prepare language-based notification for customer
+      const isTamil = customerData.languagePref === "ta";
+
+      const customerMessage = {
         notification: {
-          title: "🛒 New Order Placed",
-          body: `Order from ${order.customerName || "Customer"}`,
+          title: isTamil ? "🛒 உங்கள் ஆர்டர் வந்தது!" : "🛒 Order Received",
+          body: isTamil
+            ? `வணக்கம் ${customerData.username || "வாடிக்கையாளர்"}, உங்கள் ஆர்டர் உறுதி செய்யப்பட்டது!`
+            : `Hi ${customerData.username || "Customer"}, your order is confirmed!`,
         },
         data: {
-          type: 'order',                    // Custom data to identify it's an order
-          orderId: context.params.orderId,   // Order ID to pass to the frontend
-          customerName: order.customerName || "Customer", // Customer name
+          type: "order",
+          orderId: orderId,
+          totalAmount: order.totalAmount.toString(),
         },
-        token: adminFcmToken,
+        token: customerFcmToken,
       };
 
-      const response = await admin.messaging().send(message);
-      console.log("✅ Notification sent successfully:", response);
+      const customerResponse = await admin.messaging().send(customerMessage);
+      console.log("✅ Customer notification sent:", customerResponse);
+
     } catch (error) {
-      console.error("❌ Notification failed:", error);
+      console.error("❌ Error sending notifications:", error);
     }
   });

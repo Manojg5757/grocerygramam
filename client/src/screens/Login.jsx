@@ -5,12 +5,12 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { myColors } from "../Utils/MyColors";
@@ -33,30 +33,18 @@ const Login = () => {
   const nav = useNavigation();
   const [isVisible, setIsVisible] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [userCredential, setUserCredential] = useState({
-    email: "",
-    password: "",
-  });
-  const [unverifiedUser, setUnverifiedUser] = useState(null)
-  const dispatch = useDispatch()
-
-  const { email, password } = userCredential;
+  const [userCredential, setUserCredential] = useState({ email: "", password: "" });
+  const [unverifiedUser, setUnverifiedUser] = useState(null);
+  const dispatch = useDispatch();
   const auth = getAuth();
+  const { email, password } = userCredential;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        await user.reload(); // Refresh user info
-        if (user.emailVerified) {
-          await AsyncStorage.setItem(
-            "userToken",
-            JSON.stringify({ uid: user.uid, email: user.email })
-          );
-          nav.replace("Main");
-        } else {
-          Alert.alert("Verify Email", "Please verify your email before logging in.");
-          setUnverifiedUser(user); // Save user for resend option
-          auth.signOut();
+        await user.reload();
+        if (!user.emailVerified) {
+          await auth.signOut();
         }
       }
       setLoading(false);
@@ -72,11 +60,7 @@ const Login = () => {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password.trim()
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password.trim());
       const user = userCredential.user;
 
       if (!user.emailVerified) {
@@ -85,14 +69,11 @@ const Login = () => {
         await auth.signOut();
         return;
       }
-      
-      await AsyncStorage.setItem(
-        "userToken",
-        JSON.stringify({ uid: user.uid, email: user.email })
-      );
-      Alert.alert("Success", "Login Successful!");
-      dispatch(loadCartFromStorage())
-      nav.replace("Main");
+
+      await AsyncStorage.setItem("userToken", JSON.stringify({ uid: user.uid, email: user.email }));
+      dispatch(loadCartFromStorage());
+      nav.replace("Main"); // Navigate once here after successful login
+
     } catch (error) {
       let errorMessage = "Login failed. Please try again.";
 
@@ -114,7 +95,7 @@ const Login = () => {
     try {
       if (unverifiedUser) {
         await sendEmailVerification(unverifiedUser);
-        Alert.alert("Verification Email Sent", "Check your inbox");
+        Alert.alert("Verification Email Sent", "Check your inbox.");
       }
     } catch (err) {
       Alert.alert("Error", err.message || "Something went wrong.");
@@ -132,10 +113,7 @@ const Login = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: myColors.secondary }}>
       <StatusBar style="auto" />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
             style={{ flex: 1, paddingTop: 30 }}
@@ -155,29 +133,18 @@ const Login = () => {
             />
             <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
               <Text style={{ color: myColors.third, fontSize: 24 }}>Login</Text>
-              <Text style={{ color: "grey", fontWeight: "400", fontSize: 16, marginTop: 10 }}>
-                Enter Details
-              </Text>
+              <Text style={{ color: "grey", fontWeight: "400", fontSize: 16, marginTop: 10 }}>Enter Details</Text>
 
-              <Text style={{ fontSize: 16, fontWeight: "500", color: "grey", marginTop: 40 }}>
-                Email
-              </Text>
+              <Text style={{ fontSize: 16, fontWeight: "500", color: "grey", marginTop: 40 }}>Email</Text>
               <TextInput
                 value={email}
                 onChangeText={(val) => setUserCredential({ ...userCredential, email: val })}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                style={{
-                  borderColor: "#E3E3E3",
-                  borderBottomWidth: 2,
-                  fontSize: 16,
-                  marginTop: 15,
-                }}
+                style={{ borderColor: "#E3E3E3", borderBottomWidth: 2, fontSize: 16, marginTop: 15, color: "black" }}
               />
 
-              <Text style={{ fontSize: 16, fontWeight: "500", color: "grey", marginTop: 30 }}>
-                Password
-              </Text>
+              <Text style={{ fontSize: 16, fontWeight: "500", color: "grey", marginTop: 30 }}>Password</Text>
               <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                 <TextInput
                   value={password}
@@ -191,6 +158,7 @@ const Login = () => {
                     fontSize: 16,
                     marginTop: 15,
                     flex: 0.9,
+                    color: "black",
                   }}
                 />
                 <Ionicons
@@ -237,34 +205,16 @@ const Login = () => {
               {unverifiedUser && (
                 <TouchableOpacity
                   onPress={handleResendVerification}
-                  style={{
-                    marginTop: 20,
-                    padding: 12,
-                    borderRadius: 10,
-                    backgroundColor: "#328E6E",
-                    alignItems: "center",
-                  }}
+                  style={{ marginTop: 20, padding: 12, borderRadius: 10, backgroundColor: "#328E6E", alignItems: "center" }}
                 >
-                  <Text style={{ color: "white" , fontSize: 16, fontWeight: "bold" }}>
-                    Resend Verification Email
-                  </Text>
+                  <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>Resend Verification Email</Text>
                 </TouchableOpacity>
               )}
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  gap: 5,
-                  marginTop: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontSize: 16 }}>Don't Have an Account?</Text>
+              <View style={{ flexDirection: "row", gap: 5, marginTop: 20, justifyContent: "center", alignItems: "center" }}>
+                <Text style={{ fontSize: 16, color: "black" }}>Don't Have an Account?</Text>
                 <TouchableOpacity onPress={() => nav.navigate("UserName")}>
-                  <Text style={{ color: myColors.primary, fontSize: 15, fontWeight: "500" }}>
-                    Signup Now
-                  </Text>
+                  <Text style={{ color: myColors.primary, fontSize: 15, fontWeight: "500" }}>Signup Now</Text>
                 </TouchableOpacity>
               </View>
             </View>

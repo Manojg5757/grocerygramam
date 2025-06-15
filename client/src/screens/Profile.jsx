@@ -182,7 +182,7 @@ const Profile = () => {
           color: myColors.primary,
         }}
       >
-        {t("Profile")}
+        {t("Profile")} 
       </Text>
       {userData ? (
         <>
@@ -196,17 +196,17 @@ const Profile = () => {
             >
               {t("Personal Details")}
             </Text>
-            <Text style={{ fontSize: 14, marginVertical: 5 }}>
+            <Text style={{ fontSize: 14, marginVertical: 5,color:'black' }}>
               {t("Name")}:{" "}
-              <Text style={{ fontWeight: "bold" }}>{userData.username}</Text>
+              <Text style={{ fontWeight: "bold",color:'black' }}>{userData.username}</Text>
             </Text>
-            <Text style={{ fontSize: 14, marginVertical: 5 }}>
+            <Text style={{ fontSize: 14, marginVertical: 5,color:'black' }}>
               {t("Email")}:{" "}
-              <Text style={{ fontWeight: "bold" }}>{userData.email}</Text>
+              <Text style={{ fontWeight: "bold",color:'black' }}>{userData.email}</Text>
             </Text>
-            <Text style={{ fontSize: 14, marginVertical: 5 }}>
+            <Text style={{ fontSize: 14, marginVertical: 5,color:'black' }}>
               {t("Address")}:{" "}
-              <Text style={{ fontWeight: "bold" }}>{userData.address}</Text>
+              <Text style={{ fontWeight: "bold",color:'black' }}>{userData.address}</Text>
             </Text>
           </View>
 
@@ -245,7 +245,7 @@ const Profile = () => {
                   size={20}
                   color={myColors.primary}
                 />
-                <Text style={{ fontSize: 14 }}>{t("Your Orders")}</Text>
+                <Text style={{ fontSize: 14,color:'black' }}>{t("Your Orders")}</Text>
               </View>
               <Entypo
                 name="chevron-thin-right"
@@ -282,7 +282,7 @@ const Profile = () => {
                 }}
               >
                 <TouchableOpacity onPress={() => handleLanguageChange("en")}>
-                  <Text style={{ fontSize: 14, paddingVertical: 8 }}>
+                  <Text style={{ fontSize: 14, paddingVertical: 8,color:'black' }}>
                     English
                   </Text>
                 </TouchableOpacity>
@@ -293,6 +293,7 @@ const Profile = () => {
                       paddingVertical: 8,
                       borderTopWidth: 1,
                       borderColor: "lightgrey",
+                      color:'black'
                     }}
                   >
                     Tamil
@@ -324,7 +325,7 @@ const Profile = () => {
                   size={24}
                   color={myColors.primary}
                 />
-                <Text style={{ fontSize: 14 }}>{t("Admin Mode")}</Text>
+                <Text style={{ fontSize: 14,color:'black' }}>{t("Admin Mode")}</Text>
               </View>
               <Entypo
                 name="chevron-thin-right"
@@ -350,7 +351,7 @@ const Profile = () => {
                 style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <Feather name="file-text" size={20} color={myColors.primary} />
-                <Text style={{ fontSize: 14 }}>{t("Terms & Conditions")}</Text>
+                <Text style={{ fontSize: 14,color:'black' }}>{t("Terms & Conditions")}</Text>
               </View>
               <Entypo
                 name="chevron-thin-right"
@@ -358,7 +359,7 @@ const Profile = () => {
                 color={myColors.primary}
               />
             </TouchableOpacity>
-
+            
             <TouchableOpacity
               onPress={() => nav.navigate("PrivacyPolicy")}
               style={{
@@ -374,7 +375,7 @@ const Profile = () => {
                 style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <Feather name="shield" size={20} color={myColors.primary} />
-                <Text style={{ fontSize: 14 }}>{t("Privacy Policy")}</Text>
+                <Text style={{ fontSize: 14,color:'black' }}>{t("Privacy Policy")}</Text>
               </View>
               <Entypo
                 name="chevron-thin-right"
@@ -401,7 +402,7 @@ const Profile = () => {
                   size={20}
                   color={myColors.primary}
                 />
-                <Text style={{ fontSize: 14 }}>{t("Delete Account")}</Text>
+                <Text style={{ fontSize: 14,color:'black' }}>{t("Delete Account")}</Text>
               </View>
               <Entypo
                 name="chevron-thin-right"
@@ -426,6 +427,7 @@ const Profile = () => {
                       fontSize: 16,
                       marginTop: 15,
                       flex: 0.9,
+                      color:'black'
                     }}
                     value={password}
                     onChangeText={setPassword}

@@ -20,8 +20,8 @@
     },
     "production": {
       "android": {
-        "autoIncrement": true,
-        "releaseChannel": "production"
+        "buildType": "apk",
+        "autoIncrement": true
       },
       "channel": "production"
     }

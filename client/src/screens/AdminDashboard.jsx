@@ -6,6 +6,9 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Alert,
+  Modal,
+  Pressable,
+  FlatList as RNFlatList,
 } from "react-native";
 import {
   getFirestore,
@@ -14,6 +17,7 @@ import {
   doc,
   getDoc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getAuth, signOut } from "firebase/auth";
@@ -21,9 +25,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { myColors } from "../Utils/MyColors";
 
+const statusOptions = [
+  "processing",
+  "ready for pickup",
+  "out for delivery",
+  "delivered",
+  "cancelled"
+];
+
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showStatusDropdown, setShowStatusDropdown] = useState(null); // stores order id currently selecting status
+console.log("admin dash",orders)
   const db = getFirestore();
   const auth = getAuth();
   const navigation = useNavigation();
@@ -92,6 +106,17 @@ const AdminDashboard = () => {
     }
   };
 
+  const updateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await updateDoc(doc(db, "orders", orderId), { status: newStatus });
+      setShowStatusDropdown(null);
+      fetchOrdersWithUserDetails();
+    } catch (error) {
+      console.error("Error updating status:", error);
+      Alert.alert("Update Failed", "Could not update order status.");
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -120,10 +145,18 @@ const AdminDashboard = () => {
           <View key={item.id} style={styles.orderCard}>
             {/* Customer Info */}
             <Text style={styles.orderTitle}>👤 Customer Details</Text>
-            <Text style={styles.orderText}>Username: {item.userDetails.username || "N/A"}</Text>
-            <Text style={styles.orderText}>Phone: {item.userDetails.phone || "N/A"}</Text>
-            <Text style={styles.orderText}>Address: {item.userDetails.address || "N/A"}</Text>
-            <Text style={styles.orderText}>Landmark: {item.userDetails.landmark || "N/A"}</Text>
+            <Text style={styles.orderText}>
+              Username: {item.userDetails.username || "N/A"}
+            </Text>
+            <Text style={styles.orderText}>
+              Phone: {item.userDetails.phone || "N/A"}
+            </Text>
+            <Text style={styles.orderText}>
+              Address: {item.userDetails.address || "N/A"}
+            </Text>
+            <Text style={styles.orderText}>
+              Landmark: {item.userDetails.landmark || "N/A"}
+            </Text>
 
             {/* Pickup Badge */}
             <View style={styles.pickupBadge}>
@@ -139,6 +172,84 @@ const AdminDashboard = () => {
                 • {orderItem.name} x {orderItem.quantity}
               </Text>
             ))}
+
+            {/* Status Selector */}
+            <View style={{ marginTop: 12 }}>
+              <Text style={[styles.orderTitle, { marginBottom: 6 }]}>Status:</Text>
+              <TouchableOpacity
+                onPress={() => setShowStatusDropdown(item.id)}
+                style={{
+                  backgroundColor: "#eee",
+                  paddingVertical: 8,
+                  paddingHorizontal: 12,
+                  borderRadius: 6,
+                  alignSelf: "flex-start",
+                }}
+              >
+                <Text style={{ color: myColors.primary, fontWeight: "bold" }}>
+                  {item.status || "processing"}
+                </Text>
+              </TouchableOpacity>
+
+              {/* Modal Dropdown */}
+              <Modal
+                transparent={true}
+                visible={showStatusDropdown === item.id}
+                animationType="fade"
+                onRequestClose={() => setShowStatusDropdown(null)}
+              >
+                <Pressable
+                  style={{
+                    flex: 1,
+                    backgroundColor: "rgba(0,0,0,0.3)",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onPress={() => setShowStatusDropdown(null)}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: 8,
+                      padding: 10,
+                      width: 250,
+                      maxHeight: 300,
+                    }}
+                  >
+                    <RNFlatList
+                      data={statusOptions}
+                      keyExtractor={(status) => status}
+                      renderItem={({ item: statusItem }) => (
+                        <TouchableOpacity
+                          style={{
+                            paddingVertical: 12,
+                            borderBottomWidth: 1,
+                            borderColor: "#ddd",
+                          }}
+                          onPress={() => updateOrderStatus(item.id, statusItem)}
+                        >
+                          <Text
+                            style={{
+                              color:
+                                statusItem === (item.status || "processing")
+                                  ? myColors.primary
+                                  : "#444",
+                              fontWeight:
+                                statusItem === (item.status || "processing")
+                                  ? "bold"
+                                  : "normal",
+                              fontSize: 16,
+                            }}
+                          >
+                            {statusItem.charAt(0).toUpperCase() + statusItem.slice(1)}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  </View>
+                </Pressable>
+              </Modal>
+            </View>
 
             {/* Delete Button */}
             <TouchableOpacity
@@ -159,18 +270,21 @@ const styles = {
     flex: 1,
     padding: 20,
     backgroundColor: "#f0f4f8",
+    color: "black",
   },
   center: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+    color: "black",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+    color: "black",
   },
   headerText: {
     fontSize: 26,
@@ -198,6 +312,7 @@ const styles = {
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    color: "black",
   },
   orderTitle: {
     fontSize: 16,

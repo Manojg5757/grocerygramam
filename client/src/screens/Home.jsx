@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { StatusBar, FlatList, View } from "react-native";
+import React, { useCallback } from "react";
+import { StatusBar, FlatList, View, BackHandler, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HomeIcon from "../components/HomeIcon";
 import HomeBanner from "../components/HomeBanner";
@@ -7,10 +7,12 @@ import Categories from "../components/Categories";
 import { getPermissionAndSaveToken } from "../firebasepush/FirebasePermission";
 import { fetchUserData, loadUserDataFromStorage } from "../../Redux/UserSlice";
 import { useDispatch } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
+import { myColors } from "../Utils/MyColors";
 
 const Home = () => {
-  // Combine the static components (banner, icon, etc.) into the ListHeaderComponent
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const renderHeader = () => (
     <View>
       <HomeIcon />
@@ -18,12 +20,32 @@ const Home = () => {
     </View>
   );
 
-  useEffect(()=>{
-    getPermissionAndSaveToken()
-     dispatch(loadUserDataFromStorage()).then(() => {
-      dispatch(fetchUserData());
-    });
-  },[])
+
+  useFocusEffect(
+    useCallback(() => {
+      getPermissionAndSaveToken();
+      dispatch(loadUserDataFromStorage()).then(() => {
+        dispatch(fetchUserData());
+      });
+
+
+      const backAction = () => {
+        Alert.alert("Exit App", "Do you want to exit?", [
+          { text: "Cancel", onPress: () => null, style: "cancel" },
+          { text: "YES", onPress: () => BackHandler.exitApp() },
+        ]);
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+
+      // Cleanup when unfocused
+      return () => backHandler.remove();
+    }, [dispatch])
+  );
 
   return (
     <SafeAreaView
@@ -35,15 +57,14 @@ const Home = () => {
       }}
     >
       <StatusBar hidden={true} />
-      
-      {/* Use FlatList for entire screen content */}
+    
       <FlatList
         data={[]}
-        keyExtractor={(item, index) => index.toString()} // Dummy key extractor for header
-        renderItem={() => null} // No actual items to render, we're just using FlatList for layout
-        ListHeaderComponent={renderHeader} // Static components (icon, banner)
-        ListFooterComponent={<Categories />} // Scrollable component (Categories)
-        contentContainerStyle={{ flexGrow: 1 }} // Ensures content takes up full height
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={() => null}
+        ListHeaderComponent={renderHeader}
+        ListFooterComponent={<Categories />}
+        contentContainerStyle={{ flexGrow: 1 }}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       />

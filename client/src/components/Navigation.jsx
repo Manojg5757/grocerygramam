@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Import Screens
@@ -29,6 +29,8 @@ import PrivacyPolicy from '../screens/PrivacyPolicy';
 import TermsAndConditions from '../screens/TermsAndConditions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import StockClearance from '../screens/StockClearnce';
+import Inspiration from '../screens/Inspiration';
+import CustomScreen from '../screens/CustomScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -83,10 +85,20 @@ const BottomTabs = () => {
   );
 };
 
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: 'black',        // force text color globally
+
+  },
+};
+
 // **Stack Navigator (Handles Auth + Main App)**
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Authentication Screens */}
         <Stack.Screen name="Splash" component={Splash} />
@@ -108,6 +120,8 @@ const AppNavigator = () => {
         <Stack.Screen name='PrivacyPolicy' component={PrivacyPolicy} />
         <Stack.Screen name='TermsAndConditions' component={TermsAndConditions} />
         <Stack.Screen name='StockClearance' component={StockClearance} />
+        <Stack.Screen name='Inspiration' component={Inspiration} />
+        <Stack.Screen name='CustomScreen' component={CustomScreen} />
         
         {/* Additional Screens (Not in Bottom Tabs) */}
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
