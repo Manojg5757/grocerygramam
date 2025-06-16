@@ -53,6 +53,10 @@ const bulkUploadBanners = async (banners) => {
     await batch.commit();
 
     console.log("🔥 Banner bulk upload successful!");
+    const metaRef = db.collection("bannerMeta").doc("lastUpdated");
+    await metaRef.set({ lastUpdated: new Date() });
+    console.log("🔁 Banner meta lastUpdated doc updated!");
+
   } catch (error) {
     console.error("❌ Error uploading banners:", error);
   }
