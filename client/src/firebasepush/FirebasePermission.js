@@ -1,6 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import { Alert, PermissionsAndroid, Platform } from 'react-native';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -38,25 +38,34 @@ export const getPermissionAndSaveToken = async () => {
 
     // Get FCM token
     const currentToken = await messaging().getToken();
-    const savedToken = await AsyncStorage.getItem('fcmtoken');
     console.log('✅ FCM Token fetched:', currentToken);
 
-    // Only save if different from cached one
-    if (currentToken !== savedToken) {
-      const user = auth.currentUser;
-      if (user) {
-        await setDoc(
-          doc(db, 'users', user.uid),
-          { fcmToken: currentToken },
-          { merge: true }
-        );
-        console.log('✅ FCM token saved to Firestore users collection');
-        await AsyncStorage.setItem('fcmtoken', currentToken);
-      } else {
-        console.warn('⚠️ No user signed in');
-      }
+    const user = auth.currentUser;
+    if (!user) {
+      console.warn('⚠️ No user signed in');
+      return;
+    }
+
+    // Fetch token from Firestore
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    let firestoreToken = null;
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      firestoreToken = userData.fcmToken || null;
+    }
+
+    // Compare current token with Firestore token
+    if (currentToken !== firestoreToken) {
+      await setDoc(
+        userDocRef,
+        { fcmToken: currentToken },
+        { merge: true }
+      );
+      console.log('✅ FCM token saved to Firestore users collection');
+      await AsyncStorage.setItem('fcmtoken', currentToken);
     } else {
-      console.log('FCM token unchanged');
+      console.log('FCM token unchanged compared to Firestore');
     }
 
     // ✅ Subscribe to topic

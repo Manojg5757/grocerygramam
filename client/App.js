@@ -7,10 +7,11 @@ import { notificationListener } from "./src/firebasepush/FirebasePush";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import "./src/i18n/index.js";
 import i18n from "./src/i18n/index.js";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Text, Alert } from "react-native";
+import { Text } from "react-native";
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
@@ -26,43 +27,51 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Wrapper component to use Redux hooks
 const AppContent = () => {
   const dispatch = useDispatch();
   
+  // Simple update check that won't block app startup
+  const checkForUpdate = async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        // Store that we have an update ready
+        await AsyncStorage.setItem('hasUpdate', 'true');
+      }
+    } catch (error) {
+      // Silently fail - don't crash the app
+      console.log('Update check failed:', error);
+    }
+  };
+
   useEffect(() => {
     const prepareApp = async () => {
-      // Load cart data
-      dispatch(loadCartFromStorage());
       try {
+        // Initialize critical features first
+        dispatch(loadCartFromStorage());
         i18n.changeLanguage("ta");
         notificationListener();
+        
+        // Check if we have a pending update from last session
+        const hasUpdate = await AsyncStorage.getItem('hasUpdate');
+        if (hasUpdate === 'true') {
+          await AsyncStorage.removeItem('hasUpdate');
+          await Updates.reloadAsync();
+          return;
+        }
 
-        // 👇 Manual OTA update check
-        const update = await Updates.checkForUpdateAsync();
-        if (update.isAvailable) {
-          Alert.alert(
-            "Update Available",
-            "A new update is available. It will be installed now.",
-            [
-              {
-                text: "Update Now",
-                onPress: async () => {
-                  try {
-                    await Updates.fetchUpdateAsync();
-                    await Updates.reloadAsync(); // App will restart with the update
-                  } catch (err) {
-                    console.log("Update fetch/reload error:", err);
-                  }
-                },
-              },
-            ],
-            { cancelable: false }
-          );
+        // Hide splash screen
+        await SplashScreen.hideAsync();
+
+        // Check for updates in background after app is ready
+        if (!__DEV__) {
+          setTimeout(() => {
+            checkForUpdate();
+          }, 3000);
         }
       } catch (e) {
-        console.log("❌ Error during prepareApp", e);
-      } finally {
+        console.log("❌ Error during prepareApp:", e);
         await SplashScreen.hideAsync();
       }
     };
