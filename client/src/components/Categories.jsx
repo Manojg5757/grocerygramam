@@ -1,8 +1,9 @@
-import { View, Text, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
-import React from 'react';
-import { category } from '../../data.js';
-import {  useNavigation } from '@react-navigation/native';
+import { View, Text, FlatList, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkAndFetchCategories } from '../../Redux/CategorySlice';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -10,10 +11,13 @@ const Categories = () => {
   const nav = useNavigation();
   const { i18n } = useTranslation();
   const lang = i18n.language;
+  const dispatch = useDispatch();
+  
+  const { data: categories, loading, error } = useSelector(state => state.categories);
 
-
-
- 
+  useEffect(() => {
+    dispatch(checkAndFetchCategories());
+  }, [dispatch]);
 
   // total horizontal padding around list
   const HORIZONTAL_PADDING = 10 * 2;   
@@ -27,11 +31,26 @@ const Categories = () => {
     (screenWidth - HORIZONTAL_PADDING - ITEM_HORIZONTAL_MARGIN * NUM_COLUMNS) /
     NUM_COLUMNS;
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: 'red' }}>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <FlatList
-      
-        data={category}
+        data={categories}
         keyExtractor={(item) => item.categoryId.toString()}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
@@ -56,7 +75,7 @@ const Categories = () => {
               }}
             >
               <Image
-                source={item.icon}
+                source={{ uri: item.icon }}
                 style={{
                   width: tileWidth - 20,    // account for tile padding
                   height: tileWidth - 20,   // keep square
