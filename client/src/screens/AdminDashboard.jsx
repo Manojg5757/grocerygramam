@@ -64,6 +64,12 @@ console.log("admin dash",orders)
           };
         })
       );
+      // Sort orders by createdAt date descending (newest first)
+      ordersList.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      });
       setOrders(ordersList);
     } catch (error) {
       console.error("Error fetching orders with user details:", error);
@@ -165,7 +171,20 @@ console.log("admin dash",orders)
 
             {/* Order Info */}
             <Text style={[styles.orderTitle, { marginTop: 12 }]}>📝 Order Details</Text>
+            <Text style={styles.orderText}>
+              Order Date: {new Date(item.createdAt).toLocaleString('en-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              })}
+            </Text>
             <Text style={styles.orderText}>Total Amount: ₹{item.totalAmount}</Text>
+            <Text style={styles.orderText}>
+              Total Items: {item.orderedItems?.reduce((sum, orderItem) => sum + orderItem.quantity, 0) || 0}
+            </Text>
             <Text style={styles.orderText}>Ordered Items:</Text>
             {item.orderedItems?.map((orderItem, index) => (
               <Text key={`${item.id}-${index}`} style={styles.itemText}>
