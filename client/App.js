@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./Redux/Store";
+import { loadCartFromStorage } from "./Redux/CartSlice";
 import AppNavigator from "./src/components/Navigation";
 import { notificationListener } from "./src/firebasepush/FirebasePush";
 import * as Notifications from "expo-notifications";
@@ -25,9 +26,14 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const App = () => {
+// Wrapper component to use Redux hooks
+const AppContent = () => {
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     const prepareApp = async () => {
+      // Load cart data
+      dispatch(loadCartFromStorage());
       try {
         i18n.changeLanguage("ta");
         notificationListener();
@@ -64,10 +70,14 @@ const App = () => {
     prepareApp();
   }, []);
 
+  return <AppNavigator />;
+};
+
+const App = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <AppNavigator />
+        <AppContent />
       </Provider>
     </SafeAreaProvider>
   );
