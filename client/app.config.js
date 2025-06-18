@@ -16,7 +16,7 @@ export default () => ({
     updates: {
       url: "https://u.expo.dev/167e7f50-4e4d-4acc-9697-ad5ead245124",
       fallbackToCacheTimeout: 0,
-      checkAutomatically: "ON_ERROR",
+      checkAutomatically: "ON_LOAD",
       channel: "production"
     },
     plugins: [

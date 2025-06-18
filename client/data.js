@@ -74,13 +74,6 @@ export const category = [
     "icon": personalcare,
     "color": "#0f0ab8"
   },
-  // {
-  //   "categoryId": "Cat-11",
-  //   "name_en": "Vegtables",
-  //   "name_ta": "காய்கறிகள்",
-  //   "icon": "https://drive.google.com/uc?export=view&id=1FzGZ_997XG_nWzglg-851C5A-YcuTKVC",
-  //   "color": "#4a16b9"
-  // },
   {
     "categoryId": "Cat-11",
     "name_en": "Stationary",
@@ -95,53 +88,5 @@ export const category = [
     "icon": sanitary,
     "color": "#c5358a"
   }
-]
-
-export const catering = [
-  {
-    id:1,
-    itemName:"Meals",
-    itemNameTamil:"முழு சாப்பாடு",
-    minOrder:20,
-    type:"meal",
-    icon:"https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fmeals.png?alt=media&token=cec4bc79-9ce1-47c0-86e1-4dcf7c21dce6",
-    price:80
-  },
-  {
-    id:2,
-    itemName:"Tiffen",
-    itemNameTamil:"டிப்பன்",
-    minOrder:20,
-    type:"tiffen",
-    icon:"https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Ftiffen.png?alt=media&token=7f529ed4-d9d5-461f-a340-d46d8769049e",
-    price:120
-  },
-  {
-    id:3,
-    itemName:"Ulundha Vadai",
-    itemNameTamil:"உளுந்த வடை",
-    minOrder:25,
-    type:"piece",
-    icon:"https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Ftiffen.png?alt=media&token=7f529ed4-d9d5-461f-a340-d46d8769049e",
-    price:8
-  },
-  {
-    id:4,
-    itemName:"Paruppu Vadai",
-    itemNameTamil:"பருப்பு வடை",
-    minOrder:25,
-    type:"piece",
-    icon:"https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fparuppuvadai.png?alt=media&token=112e85a9-c92d-41d4-8c1b-57cddbb9e3ee",
-    price:8
-  },
-  {
-    id:4,
-    itemName:"Parotta",
-    itemNameTamil:"பரோட்டா",
-    minOrder:10,
-    type:"piece",
-    icon:"https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fparotta.png?alt=media&token=f08bfa66-d9eb-482c-96c9-5f35e4d070de",
-    price:12
-  },
 ]
 

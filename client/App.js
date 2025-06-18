@@ -7,7 +7,6 @@ import { notificationListener } from "./src/firebasepush/FirebasePush";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import "./src/i18n/index.js";
 import i18n from "./src/i18n/index.js";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -29,21 +28,6 @@ Notifications.setNotificationHandler({
 
 const AppContent = () => {
   const dispatch = useDispatch();
-  
-  // Simple update check that won't block app startup
-  const checkForUpdate = async () => {
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      if (update.isAvailable) {
-        await Updates.fetchUpdateAsync();
-        // Store that we have an update ready
-        await AsyncStorage.setItem('hasUpdate', 'true');
-      }
-    } catch (error) {
-      // Silently fail - don't crash the app
-      console.log('Update check failed:', error);
-    }
-  };
 
   useEffect(() => {
     const prepareApp = async () => {
@@ -52,27 +36,22 @@ const AppContent = () => {
         dispatch(loadCartFromStorage());
         i18n.changeLanguage("ta");
         notificationListener();
-        
-        // Check if we have a pending update from last session
-        const hasUpdate = await AsyncStorage.getItem('hasUpdate');
-        if (hasUpdate === 'true') {
-          await AsyncStorage.removeItem('hasUpdate');
-          await Updates.reloadAsync();
-          return;
-        }
 
-        // Hide splash screen
+        // Hide splash screen early to allow error recovery to work
         await SplashScreen.hideAsync();
 
-        // Check for updates in background after app is ready
-        if (!__DEV__) {
-          setTimeout(() => {
-            checkForUpdate();
-          }, 3000);
-        }
+        // Let expo-updates handle update checking automatically
+        // Since checkAutomatically is set to "ON_LOAD", it will handle updates
+        // Don't manually interfere with the update process
+        
       } catch (e) {
         console.log("❌ Error during prepareApp:", e);
-        await SplashScreen.hideAsync();
+        // Always hide splash screen even on error
+        try {
+          await SplashScreen.hideAsync();
+        } catch (splashError) {
+          console.log("Error hiding splash screen:", splashError);
+        }
       }
     };
 
@@ -93,4 +72,3 @@ const App = () => {
 };
 
 export default App;
- 
