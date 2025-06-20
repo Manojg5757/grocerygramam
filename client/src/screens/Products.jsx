@@ -219,7 +219,7 @@ export default function Products() {
               zIndex: 10,
             }}>
               <Text style={{ fontSize: 10, fontWeight: "bold", color: "#fff" }}>
-                {discountPercent}% OFF
+                {discountPercent}% {t("OFF")}
               </Text>
             </View>
           )}
@@ -244,7 +244,7 @@ export default function Products() {
           </View>
 
           <Text style={{ fontSize: 14, color: "gray", marginTop: 3 }} accessibilityRole="text">
-            {item.net_weight}{item.volume_type}
+            {item.net_weight} {t(item.volume_type)}
           </Text>
 
           <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
@@ -312,6 +312,11 @@ export default function Products() {
                   <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 5, color: "black", height: 35 }} numberOfLines={2} accessibilityRole="header">
                     {item[`name_${lang}`]}
                   </Text>
+                  <View style={{ flexDirection: 'row', marginTop: 2, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 12, color: "gray" }} accessibilityRole="text">
+                      {item.net_weight} {t(item.volume_type)}
+                    </Text>
+                  </View>
                   <Text style={{ fontSize: 16, fontWeight: "bold", color: myColors.primary }} accessibilityRole="text">
                     ₹{item.offer_price}
                   </Text>
@@ -321,10 +326,10 @@ export default function Products() {
                     disabled={isInCart}
                     accessibilityRole="button"
                     accessibilityState={{ disabled: isInCart }}
-                    accessibilityLabel={isInCart ? t("Added") : t("Add")}
+                    accessibilityLabel={isInCart ? t("Already Added") : t("Add to Cart")}
                   >
                     <Text style={{ color: "white", fontSize: 12, textAlign: "center" }}>
-                      {isInCart ? t("Added") : t("Add")}
+                      {isInCart ? t("Already Added") : t("Add to Cart")}
                     </Text>
                   </TouchableOpacity>
                 </TouchableOpacity>

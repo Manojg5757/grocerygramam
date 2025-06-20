@@ -265,7 +265,7 @@ const db = require('./firebase')
       "user_id": null
     },
     {
-      "id": "86218004-a7f4-4e35-b5af-ed9f6326facc",
+      "id": "862180304-a7f4-4e35-b5af-ed9f6326facc",
       "name_en": "P.S Arisi 5kg",
       "name_ta": "பி.எஸ் அரிசி 5 கிலோ",
       "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/arisi.png?alt=media&token=e6a28e92-79c3-4c6c-95ad-1e24bb57fbe9",
@@ -342,7 +342,7 @@ const db = require('./firebase')
         "name_ta": "3ரோசஸ் 250கிராம்",
         "icon": "https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/threerose100.png?alt=media&token=c22e7890-f4a1-4037-9797-b51a8788eb60",
         "mrp": 225.0,
-        "offer_price": 220.0,
+        "offer_price": 219.0,
         "discount": 2.22,
         "net_weight": 250,
         "volume_type": "g",

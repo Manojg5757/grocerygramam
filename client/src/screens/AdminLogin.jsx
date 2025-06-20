@@ -73,20 +73,20 @@ const AdminLogin = () => {
           // ✅ Get FCM Token
           const currentToken = await messaging().getToken();
           const savedToken = await AsyncStorage.getItem("fcmToken");
-          console.log("✅ FCM Token fetched:", currentToken);
-          if (currentToken !== savedToken) {
+          console.log("✅ FCM Token fetched:", currentToken);          if (currentToken !== savedToken) {
+            // Save token to users collection
             await setDoc(
-              doc(db, "admin", user.uid),
+              doc(db, "users", user.uid),
               { fcmToken: currentToken },
               { merge: true }
             );
             await AsyncStorage.setItem("fcmToken", currentToken);
-            console.log("FCM token updated")
-          }else{
-            console.log("Fcm token unchanged")
+            console.log("✅ FCM token updated in users collection")
+          } else {
+            console.log("ℹ️ FCM token unchanged")
           }
 
-          // 🔥 Save token to Firestore under admin document
+          // 🔥 Token saved to users collection
 
           console.log("✅ FCM Token saved to Firestore");
         } else {

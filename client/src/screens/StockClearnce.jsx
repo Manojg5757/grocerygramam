@@ -15,12 +15,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAndFetchProducts } from "../../Redux/ProductSlice";
 import { addToCart } from "../../Redux/CartSlice";
 import { myColors } from "../Utils/MyColors";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 const StockClearance = () => {
   const { data: products, loading } = useSelector((state) => state.products);
   const cartItems = useSelector((state) => state.cart);
   const [clearanceProduct, setClearanceProduct] = useState([]);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
   useEffect(() => {
     dispatch(checkAndFetchProducts());
@@ -41,28 +47,54 @@ const StockClearance = () => {
     }
   };
 
+  // Helper function to get product name based on current language
+  const getProductName = (item) => {
+    return i18n.language === "ta" && item.name_ta ? item.name_ta : item.name_en;
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LinearGradient colors={["#FFEB3B", "#FF9800"]} style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+            accessibilityLabel={t("Go back")}
+            accessibilityRole="button"
+          >
+            <Ionicons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{t("Stock Clearance")}</Text>
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Image source={StockBanner} style={styles.banner} />
 
-          <Text style={styles.title}>🔥 Stock Clearance Sale! 🔥</Text>
+          <Text style={styles.title}>🔥 {t("Stock Clearance Sale!")} 🔥</Text>
           <Text style={styles.description}>
-            Grab your favorite items at discounted prices before they're gone!
+            {t(
+              "Grab your favorite items at discounted prices before they're gone!"
+            )}
           </Text>
 
           {clearanceProduct.length > 0 ? (
             clearanceProduct.map((item, index) => {
               const isInCart = cartItems.some((ci) => ci.id === item.id);
+              const discountPercent = item.mrp && item.offer_price
+                ? Math.round(((item.mrp - item.offer_price) / item.mrp) * 100)
+                : 0;
+
               return (
                 <View key={index} style={styles.productCard}>
-                  <Image source={{uri:item.icon}} style={styles.productImage} />
+                  <View style={styles.discountBadge}>
+                    <Text style={styles.discountText}>
+                      {discountPercent}% {t("OFF")}
+                    </Text>
+                  </View>
+                  <Image source={{ uri: item.icon }} style={styles.productImage} />
                   <View style={styles.productInfo}>
-                    <Text style={styles.productName}>{item.name_en}</Text>
+                    <Text style={styles.productName}>{getProductName(item)}</Text>
                     <Text style={styles.productWeight}>
-                      {item.net_weight}
-                      {item.volume_type}
+                      {item.net_weight} {t(item.volume_type)}
                     </Text>
                     <View style={styles.priceRow}>
                       <Text style={styles.offerPrice}>₹{item.offer_price}</Text>
@@ -77,7 +109,7 @@ const StockClearance = () => {
                       disabled={isInCart}
                     >
                       <Text style={styles.addButtonText}>
-                        {isInCart ? "Already Added" : "Add to Cart"}
+                        {isInCart ? t("Already Added") : t("Add to Cart")}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -85,7 +117,9 @@ const StockClearance = () => {
               );
             })
           ) : (
-            <Text style={styles.noProductText}>No clearance products available.</Text>
+            <Text style={styles.noProductText}>
+              {t("No clearance products available.")}
+            </Text>
           )}
         </ScrollView>
       </LinearGradient>
@@ -97,6 +131,37 @@ export default StockClearance;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(0,0,0,0.1)",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  backButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginLeft: 16,
+    color: "#000",
     flex: 1,
   },
   banner: {
@@ -178,5 +243,20 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
     marginTop: 20,
+  },
+  discountBadge: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    backgroundColor: "#FF4444",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    zIndex: 1,
+  },
+  discountText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
   },
 });

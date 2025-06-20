@@ -17,6 +17,7 @@ import { myColors } from '../Utils/MyColors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 const cardWidth = (width - 45) / 2;
@@ -24,6 +25,7 @@ const cardWidth = (width - 45) / 2;
 const Catering = () => {
   const [catering, setCatering] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   
   // Phone number for catering service
   const CATERING_PHONE = "+919876543210"; // Replace with actual phone number
@@ -35,12 +37,12 @@ const Catering = () => {
         if (supported) {
           return Linking.openURL(phoneUrl);
         } else {
-          Alert.alert("Error", "Phone calls are not supported on this device");
+          Alert.alert(t("Error"), t("Phone calls are not supported on this device"));
         }
       })
       .catch((err) => {
         console.error('Error opening dialer:', err);
-        Alert.alert("Error", "Unable to open dialer");
+        Alert.alert(t("Error"), t("Unable to open dialer"));
       });
   };
 
@@ -55,10 +57,7 @@ const Catering = () => {
         setCatering(items);
       } catch (error) {
         console.error("Error fetching catering:", error);
-        Alert.alert(
-          "Error",
-          "Unable to load catering menu. Please try again later."
-        );
+        Alert.alert(t("Error"), t("Unable to load catering menu. Please try again later."));
       }
       setLoading(false);
     };
@@ -77,25 +76,25 @@ const Catering = () => {
         <View style={styles.heroContent}>
           {/* Top Badge */}
           <View style={styles.premiumBadge}>
-            <Text style={styles.premiumText}>⭐ PREMIUM CATERING ⭐</Text>
+            <Text style={styles.premiumText}>⭐ {t("PREMIUM CATERING")} ⭐</Text>
           </View>
           
           <Text style={styles.mainTitle}>Sri Sakthi Catering</Text>
-          <Text style={styles.subtitle}>Traditional Flavors • Modern Service</Text>
+          <Text style={styles.subtitle}>{t("Traditional Flavors • Modern Service")}</Text>
           
           {/* Feature highlights */}
           <View style={styles.featuresContainer}>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🍽️</Text>
-              <Text style={styles.featureText}>Authentic Recipes</Text>
+              <Text style={styles.featureText}>{t("Authentic Recipes")}</Text>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>👨‍🍳</Text>
-              <Text style={styles.featureText}>Expert Chefs</Text>
+              <Text style={styles.featureText}>{t("Expert Chefs")}</Text>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🚚</Text>
-              <Text style={styles.featureText}>Fresh Delivery</Text>
+              <Text style={styles.featureText}>{t("Fast Delivery")}</Text>
             </View>
           </View>
 
@@ -108,38 +107,22 @@ const Catering = () => {
             <View style={styles.callButtonContent}>
               <Text style={styles.callButtonIcon}>📞</Text>
               <View>
-                <Text style={styles.callButtonText}>Call Now for Orders</Text>
-                <Text style={styles.callButtonSubtext}>Available 24/7</Text>
+                <Text style={styles.callButtonText}>{t("Call Now for Orders")}</Text>
+                <Text style={styles.callButtonSubtext}>{t("Available 24/7")}</Text>
               </View>
             </View>
           </TouchableOpacity>
 
           <View style={styles.comingSoonBadge}>
-            <Text style={styles.badgeText}>🔥 Online Orders Coming Soon</Text>
+            <Text style={styles.badgeText}>🔥 {t("Online Orders Coming Soon")}</Text>
           </View>
         </View>
       </LinearGradient>
 
-      {/* Banner Image with Overlay */}
-      <View style={styles.bannerContainer}>
-        <Image
-          source={{
-            uri: 'https://firebasestorage.googleapis.com/v0/b/grocerygramam-27cb1.firebasestorage.app/o/catering%2Fcateringbannertwo.png?alt=media&token=8dcac0d6-3edb-435d-811d-0a30fc45ebfa',
-          }}
-          style={styles.bannerImage}
-          contentFit="cover"
-          transition={500}
-        />
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.3)']}
-          style={styles.imageOverlay}
-        />
-      </View>
-
       {/* Menu Section Header */}
       <View style={styles.menuHeader}>
-        <Text style={styles.menuTitle}>Our Specialties</Text>
-        <Text style={styles.menuSubtitle}>Crafted with love, served with pride</Text>
+        <Text style={styles.menuTitle}>{t("Our Specialties")}</Text>
+        <Text style={styles.menuSubtitle}>{t("Crafted with love, served with pride")}</Text>
       </View>
     </View>
   );
@@ -171,13 +154,13 @@ const Catering = () => {
           </Text>
           
           <View style={styles.priceContainer}>
-            <Text style={styles.priceLabel}>Starting from</Text>
+            <Text style={styles.priceLabel}>{t("Starting from")}</Text>
             <Text style={styles.price}>₹{item.price}/{item.type}</Text>
           </View>
           
           <View style={styles.minOrderContainer}>
             <View style={styles.minOrderBadge}>
-              <Text style={styles.minOrderText}>Min: {item.minOrder}</Text>
+              <Text style={styles.minOrderText}>{t("Min")}: {item.minOrder}</Text>
             </View>
           </View>
         </View>
@@ -193,7 +176,7 @@ const Catering = () => {
           style={styles.loadingGradient}
         >
           <ActivityIndicator size="large" color="#FFFFFF" />
-          <Text style={styles.loadingText}>Loading delicious options...</Text>
+          <Text style={styles.loadingText}>{t("Loading delicious options...")}</Text>
         </LinearGradient>
       </SafeAreaView>
     );
@@ -210,7 +193,10 @@ const Catering = () => {
           columnWrapperStyle={styles.row}
           ListHeaderComponent={renderHeader}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.listContainer}
+          contentContainerStyle={[
+            styles.listContainer,
+            { paddingBottom: 100 } // Add padding for bottom button
+          ]}
           renderItem={renderCateringCard}
         />
       </View>
@@ -225,12 +211,16 @@ const Catering = () => {
           <LinearGradient
             colors={['#FF6B35', '#F7931E']}
             style={styles.bottomCallGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
           >
-            <Text style={styles.bottomCallIcon}>📞</Text>
-            <Text style={styles.bottomCallText}>Call Now - Quick Orders</Text>
-            <Text style={styles.bottomCallNumber}>{CATERING_PHONE}</Text>
+            <View style={styles.bottomCallContent}>
+              <Text style={styles.bottomCallIcon}>📞</Text>
+              <View style={styles.bottomCallTextContainer}>
+                <Text style={styles.bottomCallText} numberOfLines={2}>
+                  {t("Call Now - Quick Orders")}
+                </Text>
+                <Text style={styles.bottomCallNumber}>{CATERING_PHONE}</Text>
+              </View>
+            </View>
           </LinearGradient>
         </TouchableOpacity>
       </View>
@@ -250,10 +240,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   heroGradient: {
-    paddingVertical: 40,
+    paddingTop: 20,
+    paddingBottom: 40,
     paddingHorizontal: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+    marginHorizontal: 15,
+    marginTop: 10,
   },
   heroContent: {
     alignItems: 'center',
@@ -294,7 +289,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginBottom: 25,
+    marginBottom: 35,
     paddingHorizontal: 10,
   },
   featureItem: {
@@ -316,7 +311,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 15,
     borderRadius: 25,
-    marginBottom: 20,
+    marginBottom: 25,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -359,8 +354,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 15,
+    backgroundColor: '#FFFFFF',    paddingHorizontal: 15,
     paddingVertical: 10,
     paddingBottom: 20,
     shadowColor: '#000',
@@ -374,26 +368,35 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   bottomCallGradient: {
+    borderRadius: 25,
+    padding: 15,
+  },
+  bottomCallContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
   },
   bottomCallIcon: {
-    fontSize: 20,
-    marginRight: 10,
+    fontSize: 24,
+    marginRight: 12,
+  },
+  bottomCallTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   bottomCallText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
-    marginRight: 10,
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
   bottomCallNumber: {
-    color: '#FFF9C4',
+    color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '500',
+    opacity: 0.9,
+    textAlign: 'center',
+    marginTop: 2,
   },
   bannerContainer: {
     marginHorizontal: 15,

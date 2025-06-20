@@ -26,7 +26,7 @@ import { getFirestore } from "firebase/firestore";
 
 const Cart = () => {
   const nav = useNavigation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart || []);
   const user = useSelector(state => state.user.userData);
@@ -34,6 +34,11 @@ const Cart = () => {
   // Animation values
   const fadeAnim = new Animated.Value(1);
   const scaleAnim = new Animated.Value(1);
+
+  // Helper function to get product name based on current language
+  const getProductName = (item) => {
+    return i18n.language === 'ta' && item.name_ta ? item.name_ta : item.name_en;
+  };
 
   // Load cart from AsyncStorage when component mounts
   useEffect(() => {
@@ -91,7 +96,8 @@ const Cart = () => {
       }
       nav.navigate("DeliveryDetails", {
         grandTotal: grandTotal,
-        pickup: isEligibileForDelivery ? "Home Delivery" : "Self Pickup",})
+        pickup: isEligibileForDelivery ? t("Home Delivery") : t("Self Pickup"),
+      })
     } catch (error) {
       console.log(error)
     }
@@ -108,7 +114,9 @@ const Cart = () => {
   );
 
   const totalSavings = totalMRP - grandTotal;
-  const isEligibileForDelivery = grandTotal >= 1499 && cartItems.length >= 3;
+  const DELIVERY_THRESHOLD = 1999;
+  const isEligibileForDelivery = grandTotal >= DELIVERY_THRESHOLD;
+  const amountForFreeDelivery = DELIVERY_THRESHOLD - grandTotal;
 
   // Get all products from Redux store
   const allProducts = useSelector((state) => state.products.data);
@@ -122,28 +130,23 @@ const Cart = () => {
     // Find complementary products
     const recommendations = allProducts
       .filter(product => {
-        // Exclude products already in cart
         if (cartItemIds.has(product.id)) return false;
-        
-        // Include products from same categories
         if (cartCategories.has(product.categoryId)) return true;
         
-        // Include complementary category products
-        // e.g., if there's masala in cart, suggest flour products
         const complementaryPairs = {
-          'Cat-02': 'Cat-03', // Masala -> Flour
-          'Cat-03': 'Cat-02', // Flour -> Masala
-          'Cat-04': 'Cat-01', // Oil -> Essentials
-          'Cat-01': 'Cat-04', // Essentials -> Oil
-          'Cat-05': 'Cat-07', // Snacks -> Soft Drinks
-          'Cat-07': 'Cat-05', // Soft Drinks -> Snacks
+          'Cat-02': 'Cat-03',
+          'Cat-03': 'Cat-02',
+          'Cat-04': 'Cat-01',
+          'Cat-01': 'Cat-04',
+          'Cat-05': 'Cat-07',
+          'Cat-07': 'Cat-05',
         };
         
         return Array.from(cartCategories).some(
           cartCat => complementaryPairs[cartCat] === product.categoryId
         );
       })
-      .slice(0, 3); // Limit to 3 recommendations
+      .slice(0, 3);
       
     return recommendations;
   };
@@ -158,11 +161,12 @@ const Cart = () => {
 
       {cartItems.length === 0 ? (
         <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>{t("Your cart is empty")}</Text>
           <TouchableOpacity
             style={styles.shopButton}
-            onPress={() => nav.navigate("Products")}  // Fixed extra space in route name
+            onPress={() => nav.navigate("Products")}
           >
-            <Text style={styles.shopButtonText}>{t("Browse Products")}</Text>
+            <Text style={styles.shopButtonText}>{t("Start shopping")}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -207,7 +211,7 @@ const Cart = () => {
                             resizeMode="contain"
                           />
                           <Text style={styles.recommendationName} numberOfLines={2}>
-                            {item.name_en}
+                            {getProductName(item)}
                           </Text>
                           <View style={styles.recommendationPriceContainer}>
                             <Text style={styles.recommendationPrice}>
@@ -223,37 +227,74 @@ const Cart = () => {
                     />
                   </View>
                 )}
-                {cartItems.length > 0 && (
-                  <View style={styles.summaryContainer}>
-                    <Text style={styles.orderInfo}>
-                      {t("Minimum Order Value: ₹1999 (or Self Pickup)")}
-                    </Text>
-                    <Text style={styles.orderInfo}>
-                      {t("Minimum Products: 4")}
-                    </Text>
 
-                    <Text style={styles.grandTotal}>
-                      {t("Grand Total")}: ₹{grandTotal}
-                    </Text>
-                    <Text style={styles.deliveryStatus}>
-                      {isEligibileForDelivery
-                        ? t("Eligible for free delivery")
-                        : `Add ₹${Math.max(0, 1999 - grandTotal)} more and ${Math.max(
-                            0,
-                            4 - cartItems.length
-                          )} more item${
-                            4 - cartItems.length !== 1 ? "s" : ""
-                          } for free delivery`}
-                    </Text>
-
-                    <Button
-                      title={t("Proceed to Checkout")}
-                      onPress={handleProceed}
-                      color={myColors.primary}
-                      style={styles.checkoutButton}
-                    />
+                <View style={styles.summaryContainer}>
+                  <Text style={styles.summaryTitle}>{t("Order Summary")}</Text>
+                  
+                  <View style={styles.summaryRow}>
+                    <Text style={styles.summaryLabel}>{t("Items")}</Text>
+                    <Text style={styles.summaryValue}>{cartItems.length}</Text>
                   </View>
-                )}
+
+                  <View style={styles.summaryRow}>
+                    <Text style={styles.summaryLabel}>{t("MRP Total")}</Text>
+                    <Text style={styles.summaryValue}>₹{totalMRP}</Text>
+                  </View>
+
+                  {totalSavings > 0 && (
+                    <View style={styles.summaryRow}>
+                      <Text style={styles.summaryLabel}>{t("Total Savings")}</Text>
+                      <Text style={[styles.summaryValue, styles.savingsValue]}>-₹{totalSavings}</Text>
+                    </View>
+                  )}
+
+                  <View style={[styles.summaryRow, styles.grandTotalRow]}>
+                    <Text style={styles.grandTotalLabel}>{t("Grand Total")}</Text>
+                    <Text style={styles.grandTotalValue}>₹{grandTotal}</Text>
+                  </View>
+
+                  <View style={styles.deliveryInfoContainer}>
+                    {isEligibileForDelivery ? (
+                      <>
+                        <Text style={[styles.deliveryStatus, styles.eligibleDelivery]}>
+                          {t("Your order qualifies for Free delivery")}
+                        </Text>
+                        <View style={styles.deliveryRadiusContainer}>
+                          <Text style={styles.deliveryRadiusText}>
+                            {t("Free delivery within 10km")}
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <>
+                        <Text style={[styles.deliveryStatus, styles.selfPickup]}>
+                          {t("You can come and get the order at shop, We will notify when your order is Ready")}
+                        </Text>
+                        <Text style={styles.addMoreInfo}>
+                          {t("Purchase for")} ₹{amountForFreeDelivery.toFixed(2)} {t("more to get Free Delivery")}
+                        </Text>
+                        <View style={styles.deliveryRadiusContainer}>
+                          <Text style={styles.deliveryRadiusText}>
+                            {t("Free delivery within 10km")}
+                          </Text>
+                        </View>
+                      </>
+                    )}
+                  </View>
+
+                  <TouchableOpacity
+                    style={[
+                      styles.checkoutButton,
+                      !user && styles.checkoutButtonDisabled
+                    ]}
+                    onPress={handleProceed}
+                    disabled={!user}
+                  >
+                    <Text style={styles.checkoutButtonText}>
+                      {user ? t("Proceed to Checkout") : t("Please login to continue")}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </>
             )}
             renderItem={({ item }) => (
@@ -280,16 +321,19 @@ const Cart = () => {
                       numberOfLines={1}
                       ellipsizeMode="tail"
                     >
-                      {item.name_en}
+                      {getProductName(item)}
                     </Text>
                   </TouchableOpacity>
                   <Text style={styles.productWeight}>
-                    {item.net_weight} {item.volume_type}
+                    {item.net_weight} {t(item.volume_type)}
                   </Text>
                 </View>
 
                 <View style={styles.quantityContainer}>
-                  <TouchableOpacity onPress={() => handleDecrease(item)}>
+                  <TouchableOpacity 
+                    onPress={() => handleDecrease(item)}
+                    style={styles.quantityButton}
+                  >
                     <Text style={styles.quantityButton}>-</Text>
                   </TouchableOpacity>
                   <Animated.Text 
@@ -300,7 +344,10 @@ const Cart = () => {
                   >
                     {item.quantity}
                   </Animated.Text>
-                  <TouchableOpacity onPress={() => handleIncrease(item)}>
+                  <TouchableOpacity 
+                    onPress={() => handleIncrease(item)}
+                    style={styles.quantityButton}
+                  >
                     <Text style={styles.quantityButton}>+</Text>
                   </TouchableOpacity>
                 </View>
@@ -317,6 +364,7 @@ const Cart = () => {
                 <TouchableOpacity
                   onPress={() => handleRemove(item)}
                   style={styles.removeButton}
+                  accessibilityLabel={t("Remove")}
                 >
                   <Fontisto name="shopping-basket-remove" size={20} color="red" />
                 </TouchableOpacity>
@@ -516,28 +564,114 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderTopWidth: 1,
   },
-  orderInfo: {
-    fontSize: 14,
-    textAlign: "center",
-    marginBottom: 5,
-    color: 'black',
+  summaryTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+    color: myColors.primary,
   },
-  grandTotal: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: 'black',
+  summaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  summaryLabel: {
+    fontSize: 14,
+    color: '#333',
+  },
+  summaryValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  savingsValue: {
+    color: '#2e7d32',
+  },
+  grandTotalRow: {
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    marginTop: 10,
+    paddingTop: 10,
+  },
+  grandTotalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  grandTotalValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: myColors.primary,
+  },
+  deliveryInfoContainer: {
+    marginVertical: 16,
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#f8f8f8',
+    alignItems: 'center',
   },
   deliveryStatus: {
-    textAlign: "center",
-    marginTop: 10,
-    color: 'black',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  eligibleDelivery: {
+    color: '#2e7d32',
+    backgroundColor: '#e8f5e9',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  selfPickup: {
+    color: '#ed6c02',
+    backgroundColor: '#fff3e0',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  addMoreInfo: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 4,
   },
   checkoutButton: {
     marginTop: 20,
     borderRadius: 10,
     backgroundColor: myColors.primary,
     paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkoutButtonDisabled: {
+    backgroundColor: '#ccc',
+  },
+  checkoutButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  deliveryRadiusContainer: {
+    marginTop: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 18,
+    backgroundColor: '#e1f5fe',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deliveryRadiusText: {
+    fontSize: 14,
+    color: '#01579b',
+    fontWeight: '500',
   },
 });
 

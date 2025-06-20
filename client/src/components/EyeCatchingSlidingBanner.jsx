@@ -248,7 +248,7 @@ const EyeCatchingSlidingBanner = ({ banners = [] }) => {
               shadowRadius: 8,
               elevation: 8,
             }]} 
-            onPress={()=>nav.navigate("Products")}
+            onPress={()=>nav.navigate(banner.page)}
             >
               <Animated.Text style={[
                 styles.buttonText,

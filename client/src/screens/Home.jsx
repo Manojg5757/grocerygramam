@@ -19,12 +19,14 @@ const Home = () => {
       subtitle: "Fresh fruits, vegetables, and more at unbeatable prices.",
       buttonText: "Shop Now",
       gradientColors: ["#FF6B6B", "#FF8E53"],
+      page:"Products"
     },
     {
-      title: "Discover Our App's Specialty!",
-      subtitle: "Get personalized recommendations and exclusive deals.",
-      buttonText: "Learn More",
+      title: "Stock Clearance Sale!",
+      subtitle: "Very low prices on selected items.",
+      buttonText: "Get the Deal",
       gradientColors: ["#6C63FF", "#4ECDC4"],
+      page:"StockClearance"
     },
   ];
 

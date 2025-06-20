@@ -6,10 +6,24 @@ import { collection, addDoc, doc } from "firebase/firestore";
 // ✅ Load Cart from AsyncStorage
 export const loadCartFromStorage = createAsyncThunk(
   "cart/loadCart",
-  async () => {
+  async (_, { getState }) => {
     try {
       const cart = await AsyncStorage.getItem("cart");
-      return cart ? JSON.parse(cart) : []; // Return parsed cart or empty array
+      let cartItems = cart ? JSON.parse(cart) : [];
+      
+      // Update prices from current product state
+      const state = getState();
+      const products = state.products.data;
+      
+      return cartItems.map(item => {
+        const currentProduct = products.find(p => p.id === item.id);
+        return currentProduct ? {
+          ...item,
+          offer_price: currentProduct.offer_price,
+          mrp: currentProduct.mrp
+        } : item;
+      });
+      
     } catch (error) {
       console.error("Error loading cart:", error);
       return [];
@@ -51,8 +65,6 @@ export const addOrderToFirestore = createAsyncThunk(
     }
   }
 );
-
-
 
 const cartSlice = createSlice({
   name: "cart",
